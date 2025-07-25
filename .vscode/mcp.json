@@ -1,5 +1,11 @@
 {
 	"servers": {
+		"playwright": {
+			"command": "npx",
+			"args": [
+				"@playwright/mcp@latest"
+			]
+		},
 		"Framelink Figma MCP": {
 			"command": "cmd",
 			"args": [
