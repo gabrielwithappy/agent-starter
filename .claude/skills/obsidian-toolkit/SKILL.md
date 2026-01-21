@@ -100,3 +100,4 @@ python3 scripts/query_db.py "/path/to/vault" --key "type" --value "book"
 ## References
 
 - [Obsidian YAML Frontmatter](https://help.obsidian.md/Editing+and+formatting/Metadata)
+- [Obsidian Markdown Syntax Guide](references/obsidian_syntax.md) - **Read this before creating/editing notes!**
