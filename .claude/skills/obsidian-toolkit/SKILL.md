@@ -62,7 +62,10 @@ python3 scripts/analyze_vault.py "/mnt/c/Users/MyVault"
 ```
 
 ### 5. Batch Update Metadata (Refactor)
-Use `batch_metadata.py` to add, update, or remove Frontmatter keys across the entire vault. Perfect for adding timestamps or standardizing properties. Defaults to Dry Run.
+Use `batch_metadata.py` to add, update, or remove Frontmatter keys across the entire vault. Perfect for adding timestamps or standardizing properties.
+
+**SAFETY FIRST: This command defaults to [DRY RUN] mode.** 
+It will NOT change any files unless you explicitly pass the `--no-dry-run` flag. Always verify the proposed changes in the output log before running without dry-run.
 
 ```bash
 # Syntax: python3 scripts/batch_metadata.py <vault_path> --key <key> --value <val> [--no-dry-run]
