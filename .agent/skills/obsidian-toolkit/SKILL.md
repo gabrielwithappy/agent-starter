@@ -108,7 +108,53 @@ python3 .agent/skills/obsidian-toolkit/scripts/search_notes.py --vault "/path/to
 - `--query`: The text string to search for.
 - `--case-sensitive`: (Optional) Perform a case-sensitive search.
 
+### 6. Analyze Tags
+
+Analyzes tag usage across the entire vault to assess organizational efficiency.
+
+**Command:**
+```bash
+python3 .agent/skills/obsidian-toolkit/scripts/analyze_tags.py --vault "/path/to/vault"
+```
+
+**Arguments:**
+- `--vault`: Absolute path to the Obsidian Vault root.
+- `--output`: (Optional) Path to save the markdown report. If not specified, prints to stdout.
+- `--verbose`: (Optional) Show detailed progress during scanning.
+
+**Features:**
+- Extracts tags from YAML frontmatter and inline `#tag` format
+- Analyzes tag frequency and usage patterns
+- Detects tag hierarchies (nested tags with `/`)
+- Identifies similar tags that might be duplicates
+- Finds low-usage tags
+- Generates comprehensive markdown report with recommendations
+
+### 7. Fix Tags
+
+Automatically fixes common tag issues in the vault.
+
+**Command:**
+```bash
+python3 .agent/skills/obsidian-toolkit/scripts/fix_tags.py --vault "/path/to/vault" --fix-format --dry-run
+```
+
+**Arguments:**
+- `--vault`: Absolute path to the Obsidian Vault root.
+- `--fix-format`: Fix tag formatting issues (e.g., `#tag` → `tag` in frontmatter).
+- `--remove-tags`: Comma-separated list of tags to remove.
+- `--remove-pattern`: Regex pattern for tags to remove.
+- `--dry-run`: Preview changes without modifying files.
+- `--verbose`: Show detailed progress.
+
+**Features:**
+- Fixes formatting inconsistencies in frontmatter tags
+- Removes unwanted or auto-generated tags
+- Dry-run mode for safe preview
+- Detailed change summary
+
 ## Examples
+
 
 **Creating a daily note:**
 ```bash
