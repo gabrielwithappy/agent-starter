@@ -1,13 +1,14 @@
 ---
 name: hello-world
-description: A template skill that demonstrates the standard directory structure and configuration. Use this as a reference when creating new skills.
+description: A template skill that demonstrates the standard directory structure and
+  configuration. Use this as a reference when creating new skills.
 license: MIT
 metadata:
   author: agent-starter
-  version: "1.0"
+  version: '1.0'
 allowed-tools: Bash(python:*) Read
+tags: 30_Resources
 ---
-
 # Hello World Skill
 
 This is a simple test skill that demonstrates how to use Python to output an input string. It serves as a template for creating new skills following the Agent Skills specification.

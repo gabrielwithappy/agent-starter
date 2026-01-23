@@ -1,3 +1,7 @@
+---
+tags:
+- 30_Resources
+---
 # Git Skill Manager - Quick Reference
 
 ## 📦 설치 (Install)

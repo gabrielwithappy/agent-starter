@@ -1,3 +1,7 @@
+---
+tags:
+- 30_Resources
+---
 # ✅ Install Git Plugin Skill - 완료 보고서
 
 ## 🎯 작업 완료

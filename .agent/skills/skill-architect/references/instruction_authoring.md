@@ -1,3 +1,6 @@
+---
+tags: 30_Resources
+---
 # Instruction Authoring Guidelines
 
 When populating the `Instructions` section of a new skill's `SKILL.md`, follow these guidelines to ensuring the skill is reliable and easy for Claude to use.

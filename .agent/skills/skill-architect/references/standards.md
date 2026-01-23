@@ -1,3 +1,6 @@
+---
+tags: 30_Resources
+---
 # Agent Skills Standard Checklist
 
 Use this checklist when refactoring or verifying a skill.

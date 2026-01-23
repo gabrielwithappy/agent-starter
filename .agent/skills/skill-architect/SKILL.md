@@ -1,13 +1,14 @@
 ---
 name: skill-architect
-description: Facilitates the creation and refactoring of Agent Skills compliant with the official specification. Use this to scaffold new skills or audit existing ones.
+description: Facilitates the creation and refactoring of Agent Skills compliant with
+  the official specification. Use this to scaffold new skills or audit existing ones.
 license: MIT
 metadata:
   author: agent-starter
-  version: "1.0"
+  version: '1.0'
 allowed-tools: Bash(python:*) Read Write
+tags: 30_Resources
 ---
-
 # Skill Architect
 
 This skill automates the creation of new Agent Skills and provides standards for refactoring existing ones to ensure compliance with the [Agent Skills Specification](https://agentskills.io/specification).

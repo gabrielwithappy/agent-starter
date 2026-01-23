@@ -1,3 +1,6 @@
+---
+tags: 30_Resources
+---
 # Git Skill Manager
 
 Install and manage Claude skills directly from GitHub repositories.

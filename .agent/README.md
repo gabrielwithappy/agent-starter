@@ -1,3 +1,6 @@
+---
+tags: 30_Resources
+---
 # Claude Plugin Installer Skills
 
 VS Code에서 사용 가능한 Claude Plugin 설치 도구 모음입니다.

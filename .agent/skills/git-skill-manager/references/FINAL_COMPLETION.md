@@ -1,3 +1,7 @@
+---
+tags:
+- 30_Resources
+---
 # ✅ Git Skill Manager - Agent Skills 표준 준수 완료
 
 ## 🎯 작업 완료 요약

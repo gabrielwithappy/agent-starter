@@ -1,3 +1,6 @@
+---
+tags: 30_Resources
+---
 # Claude Plugin Installer 사용 예시
 
 ## 1. 기본 사용법

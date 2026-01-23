@@ -1,3 +1,7 @@
+---
+tags:
+- 30_Resources
+---
 # Git Skill Manager - 최종 완료 요약
 
 ## ✅ 작업 완료

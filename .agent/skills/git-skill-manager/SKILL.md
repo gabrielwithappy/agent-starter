@@ -1,14 +1,21 @@
 ---
 name: git-skill-manager
-description: Install, manage, and remove Claude skills from GitHub repositories. Use when you need to add new skills from git or manage installed skills.
+description: Install, manage, and remove Claude skills from GitHub repositories. Use
+  when you need to add new skills from git or manage installed skills.
 license: MIT
 metadata:
   author: agent-starter
-  version: "2.0.0"
-  keywords: [git, github, skill, installation, management, plugin]
+  version: 2.0.0
+  keywords:
+  - git
+  - github
+  - skill
+  - installation
+  - management
+  - plugin
 allowed-tools: Bash(python:*) Read Write
+tags: 30_Resources
 ---
-
 # Git Skill Manager
 
 A skill for installing, managing, and removing Claude skills directly from GitHub repositories. This skill automates the process of downloading skill packages from git and integrating them into your `.claude/skills` directory.

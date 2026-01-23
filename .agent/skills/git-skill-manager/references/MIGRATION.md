@@ -1,3 +1,6 @@
+---
+tags: 30_Resources
+---
 # Install Git Plugin 마이그레이션 완료
 
 ## 변경 사항 요약

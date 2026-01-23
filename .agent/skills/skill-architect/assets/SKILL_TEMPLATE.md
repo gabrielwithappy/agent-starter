@@ -1,13 +1,17 @@
 ---
-name: {name}
-description: {description}
+name:
+  name: null
+description:
+  description: null
 license: MIT
 metadata:
-  author: {author}
-  version: {version}
+  author:
+    author: null
+  version:
+    version: null
 allowed-tools: Bash(python:*) Read
+tags: 29_KMS관리/template
 ---
-
 # {title_name} Skill
 
 {description}
