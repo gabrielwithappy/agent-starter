@@ -233,7 +233,7 @@ def read_plugin_info(git_url: str) -> Dict[str, Any]:
     }
 
 
-def install_plugin(git_url: str, plugin_name: Optional[str] = None, target_path: str = '.claude') -> Dict[str, Any]:
+def install_plugin(git_url: str, plugin_name: Optional[str] = None, target_path: str = '.agent') -> Dict[str, Any]:
     """Claude plugin/skills 설치"""
     try:
         if not git_url:
@@ -308,7 +308,7 @@ def install_plugin(git_url: str, plugin_name: Optional[str] = None, target_path:
         }
 
 
-def uninstall_plugin(skill_name: str, target_path: str = '.claude') -> Dict[str, Any]:
+def uninstall_plugin(skill_name: str, target_path: str = '.agent') -> Dict[str, Any]:
     """설치된 skill 제거"""
     try:
         if not skill_name:
@@ -351,7 +351,7 @@ def uninstall_plugin(skill_name: str, target_path: str = '.claude') -> Dict[str,
         }
 
 
-def list_plugins(target_path: str = '.claude') -> Dict[str, Any]:
+def list_plugins(target_path: str = '.agent') -> Dict[str, Any]:
     """설치된 plugins 목록 조회"""
     try:
         registry = load_registry(target_path)
@@ -414,16 +414,16 @@ def main():
     install_parser = subparsers.add_parser('install', help='Plugin 설치')
     install_parser.add_argument('--git-url', required=True, help='Git repository URL')
     install_parser.add_argument('--plugin-name', help='설치할 플러그인 이름 (선택사항)')
-    install_parser.add_argument('--target-path', default='.claude', help='설치 대상 경로 (기본값: .claude)')
+    install_parser.add_argument('--target-path', default='.agent', help='설치 대상 경로 (기본값: .agent)')
     
     # Uninstall subcommand
     uninstall_parser = subparsers.add_parser('uninstall', help='Plugin 제거')
     uninstall_parser.add_argument('--skill-name', required=True, help='제거할 스킬 이름')
-    uninstall_parser.add_argument('--target-path', default='.claude', help='대상 경로 (기본값: .claude)')
+    uninstall_parser.add_argument('--target-path', default='.agent', help='대상 경로 (기본값: .agent)')
     
     # List subcommand
     list_parser = subparsers.add_parser('list', help='설치된 Plugin 목록')
-    list_parser.add_argument('--target-path', default='.claude', help='대상 경로 (기본값: .claude)')
+    list_parser.add_argument('--target-path', default='.agent', help='대상 경로 (기본값: .agent)')
     
     args = parser.parse_args()
     

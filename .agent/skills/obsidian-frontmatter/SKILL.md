@@ -59,16 +59,16 @@ Find notes tagged with "30_Resources":
 python scripts/frontmatter_search.py "d:\00_MyData\obsidianKMS" --property "tags" --contains "30_Resources"
 ```
 
-Find notes with status equals "진행중":
+Find notes with status equals "진행�?:
 ```bash
-python scripts/frontmatter_search.py "d:\00_MyData\obsidianKMS" --property "상태" --equals "진행중"
+python scripts/frontmatter_search.py "d:\00_MyData\obsidianKMS" --property "?�태" --equals "진행�?
 ```
 
 Multiple filters (AND logic):
 ```bash
 python scripts/frontmatter_search.py "d:\00_MyData\obsidianKMS" \
-  --property "tags" --contains "22_업무경력/개발/AI" \
-  --property "상태" --equals "정보"
+  --property "tags" --contains "22_?�무경력/개발/AI" \
+  --property "?�태" --equals "?�보"
 ```
 
 ---
@@ -97,7 +97,7 @@ python scripts/frontmatter_list.py "d:\00_MyData\obsidianKMS" --property "tags"
 
 List status values used at least 5 times:
 ```bash
-python scripts/frontmatter_list.py "d:\00_MyData\obsidianKMS" --property "상태" --min-count 5
+python scripts/frontmatter_list.py "d:\00_MyData\obsidianKMS" --property "?�태" --min-count 5
 ```
 
 ---
@@ -136,7 +136,7 @@ python scripts/frontmatter_modify.py "note.md" --create "reviewed:true" --apply
 
 Update existing property:
 ```bash
-python scripts/frontmatter_modify.py "note.md" --update "상태:완료" --apply
+python scripts/frontmatter_modify.py "note.md" --update "?�태:?�료" --apply
 ```
 
 Delete a property:
@@ -206,20 +206,20 @@ The skill automatically handles different property types:
 ```bash
 python scripts/frontmatter_search.py "d:\00_MyData\obsidianKMS" \
   --property "tags" --contains "10_Projects" \
-  --property "상태" --equals "진행중"
+  --property "?�태" --equals "진행�?
 ```
 
 **Find all notes about AI development:**
 ```bash
 python scripts/frontmatter_search.py "d:\00_MyData\obsidianKMS" \
-  --property "tags" --contains "22_업무경력/개발/AI"
+  --property "tags" --contains "22_?�무경력/개발/AI"
 ```
 
 ### Maintaining Metadata Consistency
 
 **List all unique status values to check for inconsistencies:**
 ```bash
-python scripts/frontmatter_list.py "d:\00_MyData\obsidianKMS" --property "상태"
+python scripts/frontmatter_list.py "d:\00_MyData\obsidianKMS" --property "?�태"
 ```
 
 **Update misspelled tag across multiple notes:**

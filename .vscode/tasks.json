@@ -1,0 +1,73 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Plugin: List Installed",
+            "type": "shell",
+            "command": "python .agent/skills/plugin-manager/scripts/manage.py list",
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        },
+        {
+            "label": "Plugin: Install",
+            "type": "shell",
+            "command": "python .agent/skills/plugin-manager/scripts/manage.py install",
+            "args": [
+                "--git-url",
+                "${input:gitUrl}"
+            ],
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        },
+        {
+            "label": "Plugin: Uninstall",
+            "type": "shell",
+            "command": "python .agent/skills/plugin-manager/scripts/manage.py uninstall",
+            "args": [
+                "--skill-name",
+                "${input:skillName}"
+            ],
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        },
+        {
+            "label": "Plugin: Search Marketplace",
+            "type": "shell",
+            "command": "python .agent/skills/plugin-manager/scripts/marketplace.py search",
+            "args": [
+                "${input:searchQuery}"
+            ],
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        }
+    ],
+    "inputs": [
+        {
+            "id": "gitUrl",
+            "description": "Enter the Git URL of the plugin",
+            "type": "promptString"
+        },
+        {
+            "id": "skillName",
+            "description": "Enter the name of the skill/plugin to uninstall",
+            "type": "promptString"
+        },
+        {
+            "id": "searchQuery",
+            "description": "Enter search query",
+            "type": "promptString"
+        }
+    ]
+}
