@@ -1,8 +1,7 @@
 ---
-name: "나의 에이전트"        # UI 목록에 표시될 이름
-agent_id: "my-custom"      # @ 뒤에 붙을 명령어 (@my-custom)
-description: "설명"         # 목록 옆에 표시될 간단한 설명
-type: "agent"              # 중요: 'agent'라고 명시해야 함
+name: prd-manager
+description: "Generate a comprehensive Product Requirements Document (PRD) in Markdown, detailing user stories, acceptance criteria, technical considerations, and metrics. Optionally create GitHub issues upon user confirmation."
+tools: ['read', 'edit', 'search', 'web', 'github']
 ---
 
 # Create PRD Chat Mode
