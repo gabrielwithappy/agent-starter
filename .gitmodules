@@ -1,0 +1,3 @@
+[submodule "obsidianKMS"]
+	path = obsidianKMS
+	url = https://github.com/gabrielwithappy/obsidianKMS.git

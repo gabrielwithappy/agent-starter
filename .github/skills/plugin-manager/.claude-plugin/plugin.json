@@ -1,0 +1,22 @@
+{
+    "name": "plugin",
+    "description": "Manage skills and plugins from Git repositories",
+    "version": "2.0.0",
+    "author": {
+        "name": "agent-starter"
+    },
+    "homepage": "https://github.com/gabrielwithappy/agent-starter",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/gabrielwithappy/agent-starter"
+    },
+    "license": "MIT",
+    "keywords": [
+        "git",
+        "github",
+        "skill",
+        "plugin",
+        "installation",
+        "management"
+    ]
+}
