@@ -1,32 +1,33 @@
 ---
 description: 'Guidelines for creating high-quality Agent Skills for GitHub Copilot'
-applyTo: '**/.github/skills/**/SKILL.md, **/.claude/skills/**/SKILL.md'
+applyTo: '**/.agent/skills/**/SKILL.md, **/.github/skills/**/SKILL.md, **/.claude/skills/**/SKILL.md'
 ---
 
 # Agent Skills File Guidelines
 
-Instructions for creating effective and portable Agent Skills that enhance GitHub Copilot with specialized capabilities, workflows, and bundled resources.
+Instructions for creating effective and portable Agent Skills that enhance GitHub Copilot, Claude Code, and Antigravity with specialized capabilities, workflows, and bundled resources.
 
 ## What Are Agent Skills?
 
 Agent Skills are self-contained folders with instructions and bundled resources that teach AI agents specialized capabilities. Unlike custom instructions (which define coding standards), skills enable task-specific workflows that can include scripts, examples, templates, and reference data.
 
 Key characteristics:
-- **Portable**: Works across VS Code, Copilot CLI, and Copilot coding agent
+- **Portable**: Works across VS Code, Copilot CLI, Copilot coding agent, Claude Code, and Antigravity
 - **Progressive loading**: Only loaded when relevant to the user's request
 - **Resource-bundled**: Can include scripts, templates, examples alongside instructions
 - **On-demand**: Activated automatically based on prompt relevance
 
 ## Directory Structure
 
-Skills are stored in specific locations:
+Skills are stored in specific locations. For this project, `.agent/skills/` is the **Source of Truth**.
 
-| Location | Scope | Recommendation |
+| Location | Platform | Role |
 |----------|-------|----------------|
-| `.github/skills/<skill-name>/` | Project/repository | Recommended for project skills |
-| `.claude/skills/<skill-name>/` | Project/repository | Legacy, for backward compatibility |
-| `~/.github/skills/<skill-name>/` | Personal (user-wide) | Recommended for personal skills |
-| `~/.claude/skills/<skill-name>/` | Personal (user-wide) | Legacy, for backward compatibility |
+| `.agent/skills/<skill-name>/` | **Antigravity / Primary** | **Source of Truth**. Create and edit kills here. |
+| `.claude/skills/<skill-name>/` | Claude Code | **Managed Mirror**. Symlinked from source for Claude Code compatibility. |
+| `.github/skills/<skill-name>/` | GitHub Copilot | **Managed Mirror**. Symlinked from source for Copilot compatibility. |
+| `~/.github/skills/<skill-name>/` | Personal (user-wide) | For personal skills not tied to a specific project. |
+| `~/.claude/skills/<skill-name>/` | Personal (user-wide) | For personal skills not tied to a specific project. |
 
 Each skill **must** have its own subdirectory containing at minimum a `SKILL.md` file.
 
