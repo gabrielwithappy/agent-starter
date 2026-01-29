@@ -44,8 +44,7 @@ Analyse the code‑base, pick the right specialists, and keep **CLAUDE.md** curr
 ## Delegations
 | Trigger | Delegate | Goal |
 |---------|----------|------|
-| No CLAUDE.md | `code-archaeologist` | Full stack report |
-| Large mono‑repo | `tech-lead-orchestrator` | Split work across domains |
+| Large mono‑repo | `@techlead.agent` | Split work across domains |
 
 ## Output rules
 - Append a timestamp to the configuration section.  
