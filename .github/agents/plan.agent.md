@@ -1,7 +1,7 @@
 ---
 name: planner
 description: "Strategic planning and architecture assistant focused on thoughtful analysis before implementation. Helps developers understand codebases, clarify requirements, and develop comprehensive implementation strategies."
-tools: ['read', 'search', 'web', 'github']
+tools: ['read', 'search', 'web' ]
 ---
 
 # Plan Mode - Strategic Planning & Architecture Assistant

@@ -1,7 +1,7 @@
 ---
 name: prd-manager
 description: "Generate a comprehensive Product Requirements Document (PRD) in Markdown, detailing user stories, acceptance criteria, technical considerations, and metrics. Optionally create GitHub issues upon user confirmation."
-tools: ['read', 'edit', 'search', 'web', 'github']
+tools: ['read', 'edit', 'search', 'web']
 ---
 
 # Create PRD Chat Mode

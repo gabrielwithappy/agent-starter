@@ -1,7 +1,7 @@
 ---
 name: debugger
 description: 'Debug your application to find and fix a bug'
-tools: ['read', 'edit', 'search', 'terminal', 'web']
+tools: ['read', 'edit', 'search', 'web']
 ---
 
 # Debug Mode Instructions

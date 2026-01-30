@@ -1,7 +1,7 @@
 ---
 name: team-configurator
 description: MUST BE USED to set up—or refresh—the AI development team for the current project. Use PROACTIVELY on new repos or after major tech‑stack changes or when user asks to configure the AI team. Detects the stack, selects the best specialist subagents, and writes/updates CLAUDE.md with an “AI Team Configuration” section.
-tools: LS, Read, WriteFile, Bash, LS, Glob, Grep
+tools: ['read', 'edit']
 ---
 
 # team-configurator – AI Team Setup & Update
