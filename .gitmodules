@@ -1,4 +1,5 @@
 [submodule "gabrielwithappy.github.io"]
 	path = gabrielwithappy.github.io
 	url = https://github.com/gabrielwithappy/gabrielwithappy.github.io.git
+	ignore = all
 
