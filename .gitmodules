@@ -1,6 +1,4 @@
 [submodule "gabrielwithappy.github.io"]
 	path = gabrielwithappy.github.io
 	url = https://github.com/gabrielwithappy/gabrielwithappy.github.io.git
-[submodule "obsidianKMS"]
-	path = obsidianKMS
-	url = https://github.com/gabrielwithappy/obsidianKMS.git
+
