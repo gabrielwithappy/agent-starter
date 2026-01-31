@@ -1,161 +1,87 @@
+# 에이전트 설정 및 커스터마이징 가이드
+
+이 디렉토리는 GitHub Copilot과 VS Code의 에이전트 동작을 커스터마이징하기 위한 설정 파일들을 관리합니다. 공식 문서에 기반하여 각 구성 요소(Agents, Instructions, Skills)의 역할과 차이점을 설명합니다.
+
+참고 문서:
+- [Custom Agents](https://code.visualstudio.com/docs/copilot/customization/custom-agents)
+- [Agent Skills](https://code.visualstudio.com/docs/copilot/customization/agent-skills)
+- [Custom Instructions](https://code.visualstudio.com/docs/copilot/customization/custom-instructions)
+
 ---
-tags: 30_Resources
+
+## 1. Custom Agents (`agents/`)
+
+**특화된 페르소나 및 작업 모드**
+
+Custom Agent는 특정 작업에 최적화된 "채팅 모드"를 정의합니다. 각 에이전트는 고유한 지침(Instructions)과 사용할 수 있는 도구(Tools) 집합을 가집니다.
+
+- **목적**: 특정 작업(기획, 디버깅, 코드 리뷰 등)에 맞춰 AI의 동작과 권한을 제어합니다.
+- **주요 기능**:
+  - **도구 제한**: 예를 들어 'Planning Agent'는 코드를 실수로 수정하지 않도록 'read-only' 도구만 사용하게 설정할 수 있습니다.
+  - **Handoffs (핸드오프)**: 에이전트 간의 순차적인 워크플로우를 정의합니다. (예: 기획 → 구현 → 리뷰)
+- **파일 위치**: `.github/agents/*.agent.md`
+- **파일 형식**:
+  ```yaml
+  ---
+  name: planning-agent
+  description: 프로젝트 기획 및 설계 전문 에이전트
+  tools: ['read', 'search'] 
+  handoffs:
+    - label: 구현 시작
+      agent: implementation-agent
+  ---
+  ```
+
+## 2. Agent Skills (`skills/`)
+
+**재사용 가능한 기능 및 워크플로우 번들**
+
+Skill은 에이전트에게 "새로운 능력"을 가르치는 것입니다. 단순한 지침을 넘어, 실행 가능한 스크립트, 문서, 템플릿 등을 포함하는 독립적인 패키지입니다.
+
+- **목적**: 테스트, 배포, 다이어그램 생성 등 구체적이고 복잡한 작업을 수행하는 능력을 추가합니다.
+- **Instructions와의 차이점**:
+  - **Instructions**: "코드를 어떻게 짜야 하는가" (스타일, 규칙)
+  - **Skills**: "이 작업을 어떻게 수행하는가" (스크립트 실행, 복잡한 절차)
+- **구조**: 각 스킬은 독립된 폴더를 가지며, 그 안에 `SKILL.md`와 리소스(scripts, templates)가 포함됩니다.
+- **파일 위치**: `.github/skills/<skill-name>/SKILL.md`
+- **예시**: `webapp-testing` 스킬은 Playwright 스크립트와 테스트 절차 문서를 포함하여 에이전트가 브라우저 테스트를 수행할 수 있게 합니다.
+
+## 3. Custom Instructions (`instructions/` or root)
+
+**행동 지침 및 코딩 표준**
+
+Custom Instructions는 에이전트가 코드를 생성하거나 질문에 답할 때 **항상 따 르거나 조건부로 따라야 하는 규칙**을 정의합니다.
+
+- **목적**: 프로젝트의 코딩 스타일, 네이밍 컨벤션, 프레임워크 규칙 등을 준수하도록 합니다.
+- **유형**:
+  1. **`.github/copilot-instructions.md`**: 워크스페이스 내의 **모든** 채팅 요청에 전역적으로 적용됩니다.
+  2. **`*.instructions.md`**: 파일 경로 패턴(glob pattern)에 따라 **조건부**로 적용됩니다. (예: `test/*.ts` 파일에만 적용되는 테스트 규칙)
+- **파일 위치**: `.github/copilot-instructions.md` 또는 `.github/instructions/*.instructions.md`
+- **파일 형식 (조건부 지침)**:
+  ```markdown
+  ---
+  applyTo: "**/*.test.ts"
+  ---
+  # 테스트 코드 작성 규칙
+  - 모든 테스트는 given-when-then 패턴을 따를 것
+  ```
+
+## 4. Workflows (`workflows/`)
+
+**표준 운영 절차 (SOP)**
+
+(Antigravity 프로젝트 컨텍스트) 복잡한 다단계 작업을 일관되게 수행하기 위한 절차서입니다.
+
+- **목적**: 배포, 마이그레이션 등 실수가 없어야 하는 일련의 과정을 단계별로 정의합니다.
+- **파일 위치**: `.agent/workflows/*.md`
+
 ---
-# Claude Plugin Installer Skills
 
-VS Code?�서 ?�용 가?�한 Claude Plugin ?�치 ?�구 모음?�니??
+## 요약: 언제 무엇을 사용해야 하나요?
 
-## 개요
+| 구성 요소 | 언제 사용하나요? | 예시 |
+|:---:|---|---|
+| **Agents** | **"나는 [역활]로서 일하고 싶어"**<br>특정 모드나 페르소나가 필요할 때 | 기획자 모드, 보안 감사관 모드, 디버깅 모드 |
+| **Skills** | **"나는 [능력]을 사용하고 싶어"**<br>실행 가능한 도구나 리소스가 포함된 기능이 필요할 때 | Git 관리 도구, 다이어그램 생성기, API 테스터 |
+| **Instructions** | **"항상 [규칙]을 지켜줘"**<br>코딩 스타일이나 프로젝트 전반의 규칙이 필요할 때 | 타입스크립트 스타일 가이드, 커밋 메시지 규칙 |
 
-??skill 모음?� Git repository?�서 Claude plugin???�운로드?�여 `.claude` ?�더???�동?�로 ?�치?????�게 ?�니?? VS Code?�서 Claude Code??Claude Chat ?�장�??�께 ?�용?????�습?�다.
-
-## ?�치 ?�치
-
-```
-.claude/
-?��??� plugins/           # ?�치???�러그인??
-?��??� skills/           # Skill ?�의??
-??  ?��??� install_git_plugin/
-??      ?��??� manifest.json
-??      ?��??� index.js
-??      ?��??� install_plugin.py
-?��??� plugin.json       # ?�러그인 ?�정
-?��??� .claude-plugin    # Claude ?�러그인 ?�정
-```
-
-## ?�용 방법
-
-### 1. VS Code?�서 Claude Code ?�용
-
-`.claude` ?�더가 ?�로?�트 루트???�으�?Claude Code?�서 ?�동?�로 ?�식?�니??
-
-### 2. Skill ?�행
-
-#### Python 버전
-```bash
-python3 .claude/skills/install_git_plugin/install_plugin.py '{"git_url": "https://github.com/gabrielwithappy/obsidian-skills"}'
-```
-
-#### Node.js 버전
-```bash
-node .claude/skills/install_git_plugin/index.js '{"git_url": "https://github.com/gabrielwithappy/obsidian-skills"}'
-```
-
-### 3. Claude?�게 지?�하�?
-
-Claude Code ?�는 Claude Chat?�서 ?�음�?같이 명령?????�습?�다:
-
-```
-???�?�소�??�치?�줘: https://github.com/gabrielwithappy/obsidian-skills
-```
-
-Claude??`install_git_plugin` skill???�용?�여 ?�당 ?�러그인???�치??것입?�다.
-
-## Skill ?�력 ?�라미터
-
-### install_git_plugin
-
-| ?�라미터 | ?�??| ?�수 | ?�명 |
-|---------|------|------|------|
-| git_url | string | ??| Claude plugin???�?�된 Git repository URL |
-| plugin_name | string | | ?�치???�러그인???�름 (기본�? repository ?�름) |
-| target_path | string | | ?�치 ?�??경로 (기본�? .claude) |
-
-### ?�용 ?�시
-
-```json
-{
-  "git_url": "https://github.com/gabrielwithappy/obsidian-skills",
-  "plugin_name": "obsidian-skills",
-  "target_path": "./.claude"
-}
-```
-
-## 출력 ?�식
-
-?�공 ?�답:
-```json
-{
-  "status": "success",
-  "message": "?�러그인 'obsidian-skills'??가) ?�공?�으�??�치?�었?�니??",
-  "plugin_path": "./.claude/plugins/obsidian-skills",
-  "plugin_info": {
-    "name": "obsidian-skills",
-    "repository": "https://github.com/gabrielwithappy/obsidian-skills",
-    "owner": "gabrielwithappy",
-    "installed_at": "2026-01-23T20:31:00.000000",
-    "status": "active"
-  }
-}
-```
-
-?�패 ?�답:
-```json
-{
-  "status": "error",
-  "message": "?�러그인 ?�치 ?�패: [?�류 메시지]",
-  "plugin_path": null,
-  "plugin_info": null
-}
-```
-
-## 지?�되??Plugin ?�식
-
-??skill?� ?�음 ?�식??Claude plugin???�동?�로 ?�식?�니??
-
-- `manifest.json` - ?�러그인 메�??�이??
-- `plugin.json` - ?�러그인 ?�정
-- `.claude-plugin` - Claude ?�러그인 ?�정 ?�일
-- `README.md` - ?�러그인 문서
-- `index.js` / `install_plugin.py` - ?�러그인 ?�행 ?�일
-
-## VS Code ?�합
-
-### ?�정 방법
-
-1. ?�로?�트 루트??`.claude` ?�더가 ?�는지 ?�인
-2. Claude Code ?�장 ?�치
-3. VS Code�??�시?�하�??�동?�로 `.claude` ?�더??skills???�식?�니??
-
-### Claude?� ?�호?�용
-
-```
-@skills install_git_plugin
-?�치??Git 주소: https://github.com/gabrielwithappy/obsidian-skills
-```
-
-?�는 ??간단??
-
-```
-??GitHub repository�?plugin?�로 ?�치?�줘: https://github.com/gabrielwithappy/obsidian-skills
-```
-
-## 권한 ?�정
-
-??skill???�요�??�는 권한:
-
-- `filesystem` - read/write: ?�러그인 ?�일 ?�??
-- `network` - read: GitHub?�서 ?�일 ?�운로드
-
-## ?�러블슈??
-
-### ?�러그인???�치?��? ?�는 경우
-
-1. Git URL???�바른�? ?�인
-2. Repository가 public?��? ?�인
-3. ?�수 ?�일(manifest.json, plugin.json ????repository???�는지 ?�인
-
-### VS Code?�서 skill???�식?��? 못하??경우
-
-1. `.claude` ?�더 경로 ?�인
-2. `plugin.json` ?�일??`.claude` ?�더???�는지 ?�인
-3. VS Code ?�시??
-
-## ?�이?�스
-
-MIT License
-
-## 참고
-
-- [Claude Skills Documentation](https://platform.claude.com/docs/agents-and-tools/agent-skills)
-- [Agent Skills Specification](https://agentskills.io/specification)
