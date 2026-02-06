@@ -6,6 +6,9 @@ A simple script that outputs an input string.
 
 import sys
 
+if sys.platform == "win32":
+    sys.stdout.reconfigure(encoding="utf-8")
+
 
 def main():
     """
