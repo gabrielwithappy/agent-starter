@@ -1,33 +1,37 @@
-# Agent Skills Instruction
 
-You have access to a set of specialized capabilities called **Skills**. These skills are structured directories containing instructions (`SKILL.md`), scripts, and resources.
+# 에이전트 스킬 안내서
 
-## Skill Structure
-Each skill is located in its own directory (e.g., `.agent/skills/<skill-name>/` or `obsidianKMS/.agent/skills/<skill-name>/`) and contains:
+당신은 **스킬(Skills)** 이라는 특화된 기능 세트에 접근할 수 있습니다. 각 스킬은 `SKILL.md` 지침 파일, 스크립트, 리소스로 구성된 디렉터리입니다.
 
-1.  **`SKILL.md` (Required)**: The core instruction file.
-    *   **Frontmatter**: Contains metadata like `name` and `description`.
-    *   **Body**: Detailed step-by-step instructions, usage examples, and edge cases.
-2.  **`scripts/` (Optional)**: Executable scripts (Python, Bash, Node.js) that perform the skill's actions.
-3.  **`references/` (Optional)**: Documentation, templates (`FORMS.md`), and domain-specific knowledge.
-4.  **`assets/` (Optional)**: Templates and static resources.
+## 스킬 구조
+각 스킬은 별도의 디렉터리(예: `.agent/skills/<skill-name>/` 또는 `obsidianKMS/.agent/skills/<skill-name>/`)에 위치하며 다음을 포함합니다:
 
-## How to Use Skills
+1.  **`SKILL.md` (필수)**: 핵심 지침 파일
+    *   **Frontmatter**: `name`, `description` 등 메타데이터 포함
+    *   **Body**: 단계별 사용법, 예시, 엣지 케이스 등 상세 설명
+2.  **`scripts/` (선택)**: 스킬 동작을 수행하는 실행 스크립트(Python, Bash, Node.js 등)
+3.  **`references/` (선택)**: 문서, 템플릿(`FORMS.md`), 도메인 지식 등
+4.  **`assets/` (선택)**: 템플릿 및 정적 리소스
 
-1.  **Discovery**: When a user request implies a task covered by a skill (e.g., "manage git plugins", "update obsidian notes"), **search for relevant skills** by looking into the `.agent/skills` or `obsidianKMS/.agent/skills` directories.
-2.  **Activation**:
-    *   Use the `view_file` tool to read the `SKILL.md` of the relevant skill.
-    *   **CRITICAL**: Read the *entire* `SKILL.md` content to understand the procedure, especially the `scripts/` availability and usage arguments.
-3.  **Execution**:
-    *   Follow the "Instructions" or "Workflow" section in `SKILL.md` precisely.
-    *   If the skill provides scripts in the `scripts/` folder, prioritize using `run_command` to execute them over manual manual steps, unless instructed otherwise.
-    *   Always check strictly for `compatibility` requirements in the frontmatter.
+## 스킬 사용 방법
 
-## Example Workflow
-If the user asks to "install a new plugin":
-1.  Locate `plugin-manager/SKILL.md`.
-2.  Read `plugin-manager/SKILL.md` to find the install command (e.g., `python scripts/install.py <url>`).
-3.  Execute the command using `run_command`.
+1.  **탐색**: 사용자의 요청이 스킬로 처리 가능한 작업(예: "git 플러그인 관리", "Obsidian 노트 업데이트")일 경우, `.agent/skills` 또는 `obsidianKMS/.agent/skills` 디렉터리에서 관련 스킬을 찾으세요.
+2.  **활성화**:
+    *   관련 스킬의 `SKILL.md`를 `view_file` 도구로 읽으세요.
+    *   **중요**: `SKILL.md` 전체 내용을 반드시 읽고, 특히 `scripts/`의 존재와 사용법 인자를 확인하세요.
+3.  **실행**:
+    *   `SKILL.md`의 "Instructions" 또는 "Workflow" 절차를 정확히 따르세요.
+    *   `scripts/` 폴더에 스크립트가 있으면, 별도 지시가 없는 한 직접 단계보다 `run_command`로 실행하는 것을 우선하세요.
+    *   frontmatter의 `compatibility` 요구사항을 반드시 확인하세요.
 
-## Skill Locations
-- Primary: `.agent/skills/`
+## 예시 워크플로우
+사용자가 "새 플러그인 설치"를 요청한 경우:
+1.  `plugin-manager/SKILL.md` 위치 확인
+2.  설치 명령(예: `python scripts/install.py <url>`)을 찾기 위해 `plugin-manager/SKILL.md` 읽기
+3.  `run_command`로 명령 실행
+
+## 스킬 위치
+- 기본: `.agent/skills/`
+
+---
+모든 답변과 안내는 반드시 한국어로 작성하세요.
