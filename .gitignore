@@ -74,3 +74,6 @@ out/
 
 # Memory MCP data
 data/
+
+# Git submodule config
+.gitmodules
