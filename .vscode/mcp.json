@@ -37,6 +37,14 @@
 			],
 			"gallery": "https://api.mcp.github.com",
 			"version": "0.3.6"
+		},
+		"desktop-commander": {
+			"type": "stdio",
+			"command": "npx",
+			"args": [
+				"-y",
+				"@wonderwhy-er/desktop-commander"
+			]
 		}
 	},
 	"inputs": [
