@@ -17,6 +17,8 @@ Dependencies should be installed in your project's Python environment.
 pip install -r .agent/skills/obsidian-toolkit/requirements.txt
 ```
 
+**Windows Compatibility:** All scripts have been updated to handle UTF-8 encoding properly on Windows systems, ensuring Korean and other non-ASCII characters are displayed correctly.
+
 ## Usage
 
 

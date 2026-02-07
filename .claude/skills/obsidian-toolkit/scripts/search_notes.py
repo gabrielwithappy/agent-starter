@@ -1,4 +1,5 @@
 import argparse
+import io
 import os
 import sys
 
@@ -46,6 +47,10 @@ def search_notes(vault_path, query, case_sensitive=False):
         print(f"... and {len(matches) - 50} more matches.")
 
 if __name__ == "__main__":
+    # Force UTF-8 encoding for stdout/stderr on Windows
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
+    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace')
+    
     parser = argparse.ArgumentParser(description="Search for text in Obsidian vault notes")
     parser.add_argument("--vault", required=True, help="Path to the Obsidian vault root")
     parser.add_argument("--query", required=True, help="Text to search for")

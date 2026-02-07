@@ -1,4 +1,5 @@
 import argparse
+import io
 import os
 import sys
 import re
@@ -234,6 +235,10 @@ def generate_report(analysis, vault_path):
 
 
 if __name__ == "__main__":
+    # Force UTF-8 encoding for stdout/stderr on Windows
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
+    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace')
+    
     parser = argparse.ArgumentParser(description="Analyze tags in an Obsidian vault")
     parser.add_argument("--vault", required=True, help="Path to the Obsidian vault root")
     parser.add_argument("--output", help="Output file for the report (default: print to stdout)")
