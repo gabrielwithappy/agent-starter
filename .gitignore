@@ -60,6 +60,11 @@ out/
 *.tgz
 *.tar.gz
 
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
 # Cache directories
 .cache/
 .parcel-cache/
