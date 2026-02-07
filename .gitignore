@@ -80,5 +80,8 @@ __pycache__/
 # Memory MCP data
 data/
 
-# Git submodule config
+# Project-specific cloned repos (added per project, not submodules)
+obsidianKMS/
+
+# Git submodule config (legacy)
 .gitmodules
