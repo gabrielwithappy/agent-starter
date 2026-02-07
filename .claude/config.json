@@ -1,0 +1,55 @@
+{
+    "mcpServers": {
+        "markitdown": {
+            "command": "uvx",
+            "args": [
+                "markitdown-mcp==0.0.1a4"
+            ]
+        },
+        "com.supabase/mcp": {
+            "command": "npx",
+            "args": [
+                "--project-ref",
+                "YOUR_PROJECT_REF_HERE",
+                "--read-only",
+                "false",
+                "--features",
+                "ALL",
+                "--api-url",
+                "YOUR_API_URL_HERE",
+                "@supabase/mcp-server-supabase@0.6.3"
+            ],
+            "env": {
+                "SUPABASE_ACCESS_TOKEN": "YOUR_ACCESS_TOKEN_HERE"
+            }
+        },
+        "io.github.vercel/next-devtools-mcp": {
+            "command": "npx",
+            "args": [
+                "next-devtools-mcp@0.3.6"
+            ]
+        },
+        "desktop-commander": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@wonderwhy-er/desktop-commander"
+            ]
+        },
+        "google-workspace": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@smithery/cli",
+                "run",
+                "@taylorwilsdon/google_workspace_mcp",
+                "--config",
+                "{}"
+            ],
+            "env": {
+                "GOOGLE_OAUTH_CLIENT_ID": "YOUR_CLIENT_ID_HERE",
+                "GOOGLE_OAUTH_CLIENT_SECRET": "YOUR_CLIENT_SECRET_HERE"
+            }
+        }
+    }
+}
