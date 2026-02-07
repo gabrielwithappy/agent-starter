@@ -8,7 +8,11 @@
       "Bash(git push:*)",
       "Bash(git config:*)",
       "Bash(findstr:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(powershell -Command \"Remove-Item -Path ''d:\\\\00_MyData\\\\obsidianKMS-agent\\\\.claude\\\\skills\\\\obsidian-toolkit'' -Recurse -Force\")",
+      "Bash(uv init:*)",
+      "Bash(uv sync:*)",
+      "Bash(uv run python:*)"
     ]
   }
 }

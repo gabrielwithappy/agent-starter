@@ -1,0 +1,8 @@
+[project]
+name = "obsidiankms-agent"
+version = "0.1.0"
+description = "Obsidian KMS agent with Claude Code skills"
+requires-python = ">=3.11"
+dependencies = [
+    "pyyaml>=6.0",
+]

@@ -64,6 +64,7 @@ out/
 __pycache__/
 *.py[cod]
 *.pyo
+.venv/
 
 # Cache directories
 .cache/

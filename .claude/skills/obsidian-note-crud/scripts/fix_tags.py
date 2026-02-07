@@ -102,7 +102,7 @@ class TagFixer:
                             with open(full_path, 'w', encoding='utf-8') as f:
                                 f.write(new_content)
                             
-                            self.log(f"✓ Fixed: {rel_path}")
+                            self.log(f"[OK] Fixed: {rel_path}")
                         else:
                             self.log(f"[DRY RUN] Would fix: {rel_path}")
                 
@@ -208,7 +208,7 @@ class TagFixer:
                             with open(full_path, 'w', encoding='utf-8') as f:
                                 f.write(new_content)
                             
-                            self.log(f"✓ Modified: {rel_path}")
+                            self.log(f"[OK] Modified: {rel_path}")
                         else:
                             self.log(f"[DRY RUN] Would modify: {rel_path}")
                 
@@ -226,12 +226,12 @@ class TagFixer:
         print(f"\n{'='*60}")
         print(f"{'DRY RUN - ' if self.dry_run else ''}Changes Summary")
         print(f"{'='*60}")
-        
+
         for file_path, changes in sorted(self.changes.items()):
-            print(f"\n📄 {file_path}")
+            print(f"\n  {file_path}")
             for change in changes:
-                print(f"   • {change}")
-        
+                print(f"   - {change}")
+
         print(f"\n{'='*60}")
         print(f"Total files affected: {len(self.changes)}")
         print(f"{'='*60}")
@@ -303,7 +303,7 @@ Examples:
     fixer.print_summary()
     
     if args.dry_run:
-        print("\n⚠️  DRY RUN MODE - No files were modified")
+        print("\n[WARNING] DRY RUN MODE - No files were modified")
         print("Remove --dry-run flag to apply changes")
     else:
-        print(f"\n✅ Successfully processed {total_files} files")
+        print(f"\n[OK] Successfully processed {total_files} files")

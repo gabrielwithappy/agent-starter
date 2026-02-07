@@ -15,4 +15,9 @@
         - tag2
       ---
       ```
-4.  **Tool Usage**: **CRITICAL**: When creating, reading, updating, or deleting Obsidian notes, **ALWAYS** prefer using the scripts provided in the `obsidian-toolkit` skill (e.g., `.claude/skills/obsidian-toolkit/scripts/create_note.py`) over standard file tools like `write_to_file`, to ensure proper handling of Obsidian-specific features.
+4.  **Markdown Syntax**: **CRITICAL**: When writing or editing Obsidian note **content**, you **MUST** first load the `obsidian-markdown` skill to reference Obsidian Flavored Markdown syntax (wikilinks, callouts, embeds, properties, etc.). This ensures all generated content is fully compatible with Obsidian.
+5.  **Tool Usage**: **CRITICAL**: When creating, reading, updating, or deleting Obsidian notes, **ALWAYS** prefer using the scripts provided in the `obsidian-note-crud` skill (e.g., `.claude/skills/obsidian-note-crud/scripts/create_note.py`) over standard file tools like `write_to_file`, to ensure proper handling of Obsidian-specific features.
+6.  **Obsidian 작업 워크플로우**: Obsidian 노트를 작성할 때 반드시 아래 순서를 따릅니다:
+    1. `obsidian-markdown` 스킬 로드 → 마크다운 문법 참조
+    2. 콘텐츠 작성 (Obsidian Flavored Markdown 준수)
+    3. `obsidian-note-crud` 스킬의 스크립트로 노트 생성/수정

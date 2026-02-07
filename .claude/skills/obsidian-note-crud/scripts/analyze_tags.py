@@ -4,6 +4,7 @@ import os
 import sys
 import re
 from collections import defaultdict, Counter
+from datetime import datetime
 from difflib import SequenceMatcher
 
 try:
@@ -161,7 +162,7 @@ def generate_report(analysis, vault_path):
     report = []
     report.append("# Tag Analysis Report")
     report.append(f"\n**Vault**: `{vault_path}`")
-    report.append(f"\n**Generated**: {os.popen('date').read().strip()}")
+    report.append(f"\n**Generated**: {datetime.now().strftime('%Y-%m-%d %H:%M')}")
     
     # Summary
     report.append("\n## Summary")

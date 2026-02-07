@@ -1,4 +1,5 @@
 import argparse
+import io
 import os
 import sys
 
@@ -21,9 +22,13 @@ def delete_note(vault_path, note_name):
         sys.exit(1)
 
 if __name__ == "__main__":
+    # Force UTF-8 encoding for stdout/stderr on Windows
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
+    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace')
+
     parser = argparse.ArgumentParser(description="Delete a note from Obsidian vault")
     parser.add_argument("--vault", required=True, help="Path to the Obsidian vault root")
     parser.add_argument("--name", required=True, help="Name of the note (relative path)")
-    
+
     args = parser.parse_args()
     delete_note(args.vault, args.name)

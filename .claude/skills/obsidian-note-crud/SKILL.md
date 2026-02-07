@@ -1,20 +1,19 @@
 ---
-name: obsidian-toolkit
-description: A toolkit for interacting with an Obsidian Vault using atomic CRUD and Search operations.
+name: obsidian-note-crud
+description: Create, read, update, delete, and search Obsidian notes. Use when creating new notes, reading note content, appending to notes, deleting notes, searching vault text, or managing tags. Provides Python scripts for all note file operations.
 ---
 
-# Obsidian Toolkit
+# Obsidian Note CRUD
 
-This skill provides a set of atomic scripts to managing notes in an Obsidian Vault (or any Markdown-based knowledge base).
+This skill provides Python scripts for note-level operations in an Obsidian Vault: create, read, update, delete, search, and tag management.
 
 
 ## Installation
 
-Dependencies should be installed in your project's Python environment.
+Dependencies are managed via `uv` at the project root. Run once after cloning:
 
 ```bash
-# Install dependencies for this skill
-pip install -r .agent/skills/obsidian-toolkit/requirements.txt
+uv sync
 ```
 
 **Windows Compatibility:** All scripts have been updated to handle UTF-8 encoding properly on Windows systems, ensuring Korean and other non-ASCII characters are displayed correctly.
@@ -27,17 +26,7 @@ Each tool is a standalone Python script located in the `scripts/` directory. You
 
 ### Markdown Syntax Guide
 
-When creating or editing notes, you **MUST** follow the Obsidian Flavored Markdown syntax described in:
-`references/obsidian_syntax.md`
-
-This guide covers:
-- **Wikilinks** (`[[Link]]`) instead of standard markdown links.
-- **Callouts** (`> [!type]`) for highlighted blocks.
-- **Embeds** (`![[Note]]`) for including content.
-- **Frontmatter** (YAML properties) for metadata.
-- **Math**, **Mermaid Diagrams**, and more.
-
-Please consult this file to ensure all generated content is compatible with Obsidian's features.
+When creating or editing notes, you **MUST** first load the `obsidian-markdown` skill for Obsidian Flavored Markdown syntax reference (wikilinks, callouts, embeds, frontmatter, math, Mermaid diagrams, etc.).
 
 ### 1. Create a Note
 
@@ -46,7 +35,7 @@ Creates a new markdown note.
 
 **Command:**
 ```bash
-python3 .agent/skills/obsidian-toolkit/scripts/create_note.py --vault "/path/to/vault" --name "folder/My New Note" --content "# Heading\n\nContent here."
+python3 .claude/skills/obsidian-note-crud/scripts/create_note.py --vault "/path/to/vault" --name "folder/My New Note" --content "# Heading\n\nContent here."
 ```
 
 **Arguments:**
@@ -61,7 +50,7 @@ Reads the content of an existing note.
 
 **Command:**
 ```bash
-python3 .agent/skills/obsidian-toolkit/scripts/read_note.py --vault "/path/to/vault" --name "My Note"
+python3 .claude/skills/obsidian-note-crud/scripts/read_note.py --vault "/path/to/vault" --name "My Note"
 ```
 
 **Arguments:**
@@ -74,7 +63,7 @@ Updates an existing note by appending content or replacing it entirely.
 
 **Command:**
 ```bash
-python3 .agent/skills/obsidian-toolkit/scripts/update_note.py --vault "/path/to/vault" --name "My Note" --content "\n## New Section" --mode append
+python3 .claude/skills/obsidian-note-crud/scripts/update_note.py --vault "/path/to/vault" --name "My Note" --content "\n## New Section" --mode append
 ```
 
 **Arguments:**
@@ -89,7 +78,7 @@ Deletes a note permanently.
 
 **Command:**
 ```bash
-python3 .agent/skills/obsidian-toolkit/scripts/delete_note.py --vault "/path/to/vault" --name "My Note"
+python3 .claude/skills/obsidian-note-crud/scripts/delete_note.py --vault "/path/to/vault" --name "My Note"
 ```
 
 **Arguments:**
@@ -102,7 +91,7 @@ Searches for text across all notes in the vault.
 
 **Command:**
 ```bash
-python3 .agent/skills/obsidian-toolkit/scripts/search_notes.py --vault "/path/to/vault" --query "TODO"
+python3 .claude/skills/obsidian-note-crud/scripts/search_notes.py --vault "/path/to/vault" --query "TODO"
 ```
 
 **Arguments:**
@@ -116,7 +105,7 @@ Analyzes tag usage across the entire vault to assess organizational efficiency.
 
 **Command:**
 ```bash
-python3 .agent/skills/obsidian-toolkit/scripts/analyze_tags.py --vault "/path/to/vault"
+python3 .claude/skills/obsidian-note-crud/scripts/analyze_tags.py --vault "/path/to/vault"
 ```
 
 **Arguments:**
@@ -138,7 +127,7 @@ Automatically fixes common tag issues in the vault.
 
 **Command:**
 ```bash
-python3 .agent/skills/obsidian-toolkit/scripts/fix_tags.py --vault "/path/to/vault" --fix-format --dry-run
+python3 .claude/skills/obsidian-note-crud/scripts/fix_tags.py --vault "/path/to/vault" --fix-format --dry-run
 ```
 
 **Arguments:**
@@ -160,10 +149,10 @@ python3 .agent/skills/obsidian-toolkit/scripts/fix_tags.py --vault "/path/to/vau
 
 **Creating a daily note:**
 ```bash
-python3 .agent/skills/obsidian-toolkit/scripts/create_note.py --vault "/home/user/obsidian" --name "Daily/2023-10-27" --content "# Daily Log\n\n- [ ] Task 1"
+python3 .claude/skills/obsidian-note-crud/scripts/create_note.py --vault "/home/user/obsidian" --name "Daily/2023-10-27" --content "# Daily Log\n\n- [ ] Task 1"
 ```
 
 **Appending a todo:**
 ```bash
-python3 .agent/skills/obsidian-toolkit/scripts/update_note.py --vault "/home/user/obsidian" --name "Daily/2023-10-27" --content "- [ ] New Task" --mode append
+python3 .claude/skills/obsidian-note-crud/scripts/update_note.py --vault "/home/user/obsidian" --name "Daily/2023-10-27" --content "- [ ] New Task" --mode append
 ```
