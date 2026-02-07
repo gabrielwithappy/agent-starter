@@ -16,6 +16,7 @@ Examples:
 """
 
 import argparse
+import io
 import json
 import sys
 from pathlib import Path
@@ -152,8 +153,12 @@ def main():
     parser.add_argument('--output', metavar='FILE',
                         help='Save output to file instead of printing to console')
     
+    # Force UTF-8 encoding for stdout/stderr on Windows
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
+    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace')
+
     args = parser.parse_args()
-    
+
     # Validate arguments
     if not args.properties:
         parser.error("At least one --property must be specified")

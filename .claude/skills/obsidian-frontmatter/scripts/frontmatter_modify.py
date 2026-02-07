@@ -20,6 +20,7 @@ Examples:
 """
 
 import argparse
+import io
 import sys
 from pathlib import Path
 from typing import List, Dict, Any, Tuple
@@ -169,8 +170,12 @@ def main():
     parser.add_argument('--force', action='store_true',
                         help='Skip confirmation (use with caution!)')
     
+    # Force UTF-8 encoding for stdout/stderr on Windows
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
+    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace')
+
     args = parser.parse_args()
-    
+
     # Validate arguments
     if not args.file and not args.files:
         parser.error("Must specify either file or --files")
@@ -223,15 +228,15 @@ def main():
             original, modified, changed = modify_file(file_path, operation_type, key, value)
             
             if not changed:
-                print(f"⊘ {file_path}: No changes needed")
+                print(f"[SKIP] {file_path}: No changes needed")
                 continue
             
             changed_files += 1
             
             # Show diff
-            print(f"\n{'─'*80}")
+            print(f"\n{'-'*80}")
             print(f"File: {file_path}")
-            print(f"{'─'*80}")
+            print(f"{'-'*80}")
             diff = show_diff(file_path, original, modified)
             print(diff)
             
@@ -247,10 +252,10 @@ def main():
                 # Write changes
                 with open(file_path, 'w', encoding='utf-8') as f:
                     f.write(modified)
-                print(f"✓ Applied changes to {file_path}")
+                print(f"[OK] Applied changes to {file_path}")
         
         except Exception as e:
-            print(f"✗ Error processing {file_path}: {e}", file=sys.stderr)
+            print(f"[ERROR] Error processing {file_path}: {e}", file=sys.stderr)
             continue
     
     # Summary
@@ -262,7 +267,7 @@ def main():
     print(f"{'='*80}\n")
     
     if not args.apply and changed_files > 0:
-        print("⚠ Changes were NOT applied. Add --apply flag to apply changes.")
+        print("[WARNING] Changes were NOT applied. Add --apply flag to apply changes.")
     
     sys.exit(0)
 

@@ -217,9 +217,13 @@ def infer_property_type(value_str: str) -> Any:
         try:
             import json
             return json.loads(value_str)
-        except:
-            pass
-    
+        except (json.JSONDecodeError, ValueError):
+            # JSON failed, strip brackets and split by comma
+            inner = value_str[1:-1]
+            items = [item.strip() for item in inner.split(',') if item.strip()]
+            if items:
+                return items
+
     if ',' in value_str:
         return [item.strip() for item in value_str.split(',')]
     

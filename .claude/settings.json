@@ -1,5 +1,14 @@
 {
   "enabledPlugins": {
     "obsidian@obsidian-skills": true
+  },
+  "permissions": {
+    "allow": [
+      "Bash(python:*)",
+      "Edit(.claude/skills/**)",
+      "Edit(obsidianKMS/**)",
+      "Read(obsidianKMS/**)",
+      "Read(.claude/**)"
+    ]
   }
 }
