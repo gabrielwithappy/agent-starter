@@ -34,7 +34,22 @@ Obsidian 작업에는 두 가지 스킬을 **함께** 사용합니다:
 - **스크립트 실행**: `uv run python .claude/skills/<skill>/scripts/<script>.py` 또는 `.venv` 활성화 후 `python` 직접 실행
 - **의존성 추가**: 새 스킬에 외부 패키지가 필요하면 `uv add <package>`로 추가합니다. 스킬별 `requirements.txt`는 사용하지 않습니다.
 
-## 4. 워크플로우 (Workflow)
+## 4. MCP 설정 (Model Context Protocol)
+
+Claude Code와 VS Code 확장은 **각각 다른 MCP 설정 파일**을 사용합니다:
+
+- **Claude Code CLI**: `.claude/mcp.json` 사용
+- **VS Code 확장**: `.vscode/mcp.json` 사용
+
+**중요**: MCP 서버를 추가하거나 변경할 때는 **두 파일을 동기화**해야 합니다:
+```bash
+# .vscode/mcp.json을 수정한 후, .claude/mcp.json에도 반영
+cp .vscode/mcp.json .claude/mcp.json
+```
+
+또는 둘 다 동일하게 유지하기 위해 한 곳에서만 수정하고 다른 곳으로 복사합니다.
+
+## 5. 워크플로우 (Workflow)
 1.  **요청 분석**: 사용자의 의도를 파악합니다.
 2.  **스킬 매칭**: 도메인(예: "Obsidian", "Git", "Python")에 맞는 스킬을 찾습니다.
 3.  **실행**: 스킬에 정의된 방법을 사용하여 작업을 수행합니다.
