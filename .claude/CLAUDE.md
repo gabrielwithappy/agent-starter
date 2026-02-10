@@ -63,45 +63,6 @@ Claude Code와 VS Code 확장은 **각각 다른 MCP 설정 파일**을 사용�
 - **VS Code 확장 사용 시**: `.vscode/mcp.json`의 `servers` 섹션을 수정합니다
 - 두 도구를 동시에 사용하는 경우, **각 설정 파일을 별도로 관리**해야 합니다
 
-### Google Workspace MCP 설정
-
-Google Workspace MCP를 사용하려면 Google Cloud 프로젝트 설정이 필수입니다:
-
-**⚠️ 중요: uvx는 .env.local을 읽지 않습니다**
-
-`uvx workspace-mcp`로 실행되므로 **시스템 환경변수**를 사용해야 합니다:
-
-**Windows PowerShell (관리자 권한)**:
-```powershell
-[Environment]::SetEnvironmentVariable("GOOGLE_OAUTH_CLIENT_ID", "YOUR_CLIENT_ID", "User")
-[Environment]::SetEnvironmentVariable("GOOGLE_OAUTH_CLIENT_SECRET", "YOUR_CLIENT_SECRET", "User")
-[Environment]::SetEnvironmentVariable("OAUTHLIB_INSECURE_TRANSPORT", "1", "User")
-```
-
-**또는 GUI**:
-1. Windows 검색에서 "환경 변수" 검색
-2. "사용자 환경 변수 편집" 클릭
-3. "새로 만들기" 버튼으로 각 변수 추가
-
-**Google Cloud 설정 단계**:
-1. [Google Cloud Console](https://console.cloud.google.com/) 접속
-2. 새 프로젝트 생성
-3. OAuth 2.0 자격증명 생성 (Desktop Application 타입)
-4. Gmail, Drive, Calendar, Docs, Sheets 등 필요한 API 활성화
-5. 클라이언트 ID와 시크릿을 환경변수에 설정
-
-**MCP 설정**:
-```json
-{
-  "command": "uvx",
-  "args": ["workspace-mcp", "--tool-tier", "core"]
-}
-```
-
-**사용 가능한 도구**:
-- Gmail, Drive, Calendar, Docs, Sheets, Slides, Forms, Tasks, Contacts, Chat
-- `--tool-tier` 옵션: `core`, `extended`, `complete`
-
 ## 5. 워크플로우 (Workflow)
 1.  **요청 분석**: 사용자의 의도를 파악합니다.
 2.  **스킬 매칭**: 도메인(예: "Obsidian", "Git", "Python")에 맞는 스킬을 찾습니다.
