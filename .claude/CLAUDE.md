@@ -38,16 +38,13 @@ Obsidian 작업에는 두 가지 스킬을 **함께** 사용합니다:
 
 Claude Code와 VS Code 확장은 **각각 다른 MCP 설정 파일**을 사용합니다:
 
-- **Claude Code CLI**: `.claude/mcp.json` 사용
+- **Claude Code CLI**: `.claude/config.json` 사용 (mcpServers 섹션)
 - **VS Code 확장**: `.vscode/mcp.json` 사용
 
-**중요**: MCP 서버를 추가하거나 변경할 때는 **두 파일을 동기화**해야 합니다:
-```bash
-# .vscode/mcp.json을 수정한 후, .claude/mcp.json에도 반영
-cp .vscode/mcp.json .claude/mcp.json
-```
-
-또는 둘 다 동일하게 유지하기 위해 한 곳에서만 수정하고 다른 곳으로 복사합니다.
+**중요**: MCP 서버를 추가하거나 변경할 때 유의사항:
+- **Claude Code 사용 시**: `.claude/config.json`의 `mcpServers` 섹션을 수정합니다
+- **VS Code 확장 사용 시**: `.vscode/mcp.json`의 `servers` 섹션을 수정합니다
+- 두 도구를 동시에 사용하는 경우, **각 설정 파일을 별도로 관리**해야 합니다
 
 ## 5. 워크플로우 (Workflow)
 1.  **요청 분석**: 사용자의 의도를 파악합니다.

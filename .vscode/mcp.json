@@ -1,5 +1,16 @@
 {
 	"servers": {
+		"google-workspace-mcp": {
+			"type": "stdio",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"npx",
+				"-y",
+				"mcp-remote",
+				"https://server.smithery.ai/@taylorwilsdon/google_workspace_mcp/mcp"
+			]
+		},
 		"microsoft/markitdown": {
 			"type": "stdio",
 			"command": "uvx",
