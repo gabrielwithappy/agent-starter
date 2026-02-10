@@ -1,38 +1,23 @@
 ---
-description: Install a skill/plugin from a Git repository or marketplace
+description: Install a skill plugin from a Git repository
 ---
 # Install Plugin Command
 
-Install a skill or plugin from a GitHub repository or from a marketplace by name.
+Install skills from a GitHub repository via git clone.
 
 ## Usage
 
-**Option 1: Install from Git URL**
-
 ```powershell
-python .agent/skills/plugin-manager/scripts/manage.py install --git-url "$ARGUMENTS"
+python .claude/skills/plugin-manager/scripts/manage.py install --git-url "$ARGUMENTS"
 ```
 
-**Option 2: Install from Marketplace by Name**
-
-First, get the Git URL from the marketplace:
-
-```powershell
-$url = python .agent/skills/plugin-manager/scripts/marketplace.py get-url "$ARGUMENTS"
-if ($url) {
-    python .agent/skills/plugin-manager/scripts/manage.py install --git-url $url
-}
-```
-
-If the user provides just a plugin name, search the marketplace first and install if found.
+Optional: `--plugin-name "custom-name"` to override the default repo name.
 
 ## Examples
 
 ```
-/plugin:install https://github.com/user/repo
-/plugin:install commit-commands
+/plugin-manager:install https://github.com/anthropics/skills
+/plugin-manager:install https://github.com/kepano/obsidian-skills
 ```
 
-The first example installs from a direct Git URL.
-The second example searches the marketplace for "commit-commands" and installs it if found.
-
+The command clones the repo, detects skill directories, and copies them to `.claude/skills/`.

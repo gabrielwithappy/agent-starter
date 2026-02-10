@@ -1,5 +1,5 @@
 {
-    "name": "plugin",
+    "name": "plugin-manager",
     "description": "Manage skills and plugins from Git repositories",
     "version": "2.0.0",
     "author": {
@@ -18,5 +18,43 @@
         "plugin",
         "installation",
         "management"
+    ],
+    "commands": [
+        {
+            "name": "install",
+            "description": "Install a skill plugin from a Git repository",
+            "executable": "manage.py",
+            "args": ["install", "--git-url", "$ARGUMENTS"]
+        },
+        {
+            "name": "list",
+            "description": "List all installed plugins and skills",
+            "executable": "manage.py",
+            "args": ["list"]
+        },
+        {
+            "name": "update",
+            "description": "Update installed plugin(s) to latest version",
+            "executable": "manage.py",
+            "args": ["update", "--plugin-name", "$ARGUMENTS"]
+        },
+        {
+            "name": "uninstall",
+            "description": "Uninstall a plugin and its skills",
+            "executable": "manage.py",
+            "args": ["uninstall", "--plugin-name", "$ARGUMENTS"]
+        },
+        {
+            "name": "browse",
+            "description": "Browse all plugins in marketplaces",
+            "executable": "marketplace.py",
+            "args": ["list-marketplace"]
+        },
+        {
+            "name": "search",
+            "description": "Search for plugins in marketplaces",
+            "executable": "marketplace.py",
+            "args": ["search", "$ARGUMENTS"]
+        }
     ]
 }

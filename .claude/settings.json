@@ -14,8 +14,5 @@
       "Read(.claude/**)"
     ]
   },
-  "enabledPlugins": {
-    "obsidian@obsidian-skills": true,
-    "document-skills@anthropic-agent-skills": true
-  }
+  "enabledPlugins": {}
 }

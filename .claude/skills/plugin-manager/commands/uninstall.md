@@ -1,24 +1,23 @@
 ---
-description: Uninstall a skill/plugin by name
+description: Uninstall a plugin and all its skills
 ---
 # Uninstall Plugin Command
 
-Remove an installed skill or plugin.
+Remove a plugin and all its associated skills.
 
 ## Usage
 
-Uninstall a plugin by providing its skill name:
-
 ```powershell
-python .agent/skills/plugin-manager/scripts/manage.py uninstall --skill-name "$ARGUMENTS"
+python .claude/skills/plugin-manager/scripts/manage.py uninstall --plugin-name "$ARGUMENTS"
 ```
 
-Use `/plugin:list` first to see the exact skill names available.
+Use `/plugin-manager:list` first to see plugin names.
 
 ## Example
 
 ```
-/plugin:uninstall json-canvas
+/plugin-manager:uninstall skills
+/plugin-manager:uninstall obsidian-skills
 ```
 
-This will delete the skill directory and remove it from the registry.
+This removes all skill directories installed by the plugin, deletes the cloned repo, and updates the registry.

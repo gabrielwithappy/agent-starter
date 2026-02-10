@@ -1,16 +1,52 @@
 {
-  "version": "1.0.0",
+  "version": "2.0.0",
   "plugins": [
+    {
+      "name": "skills",
+      "git_url": "https://github.com/anthropics/skills",
+      "owner": "anthropics",
+      "repo": "skills",
+      "repo_path": "anthropics-skills",
+      "skill_prefix": "skills",
+      "commit_hash": "1ed29a03dc852d30fa6ef2ca53a67dc2c2c2c563",
+      "installed_at": "2026-02-10T22:41:45.927406",
+      "updated_at": "2026-02-10T22:52:37.407238",
+      "skills": [
+        "algorithmic-art",
+        "brand-guidelines",
+        "canvas-design",
+        "doc-coauthoring",
+        "docx",
+        "frontend-design",
+        "internal-comms",
+        "mcp-builder",
+        "pdf",
+        "pptx",
+        "skill-creator",
+        "slack-gif-creator",
+        "theme-factory",
+        "web-artifacts-builder",
+        "webapp-testing",
+        "xlsx"
+      ],
+      "status": "installed"
+    },
     {
       "name": "obsidian-skills",
       "git_url": "https://github.com/kepano/obsidian-skills",
       "owner": "kepano",
       "repo": "obsidian-skills",
-      "target_path": ".agent",
-      "installed_at": "2026-02-06T22:36:29.028177",
-      "skills": [],
+      "repo_path": "kepano-obsidian-skills",
+      "skill_prefix": "skills",
+      "commit_hash": "34c2cda8b29eaeec6793e342b8b56e96ac29f15c",
+      "installed_at": "2026-02-10T22:41:55.341396",
+      "updated_at": "2026-02-10T22:52:38.502130",
+      "skills": [
+        "json-canvas",
+        "obsidian-bases",
+        "obsidian-markdown"
+      ],
       "status": "installed"
     }
-  ],
-  "last_updated": "2026-02-06T22:36:29.028953"
+  ]
 }

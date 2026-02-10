@@ -1,30 +1,32 @@
-# Claude Agent Instructions
+# Claude AI 에이전트 가이드
 
-This document provides high-level instructions for the Claude AI agent operating within this workspace.
+이 문서는 이 워크스페이스 내에서 작동하는 Claude AI 에이전트를 위한 상위 수준의 지침을 제공합니다.
 
-## 1. Skill Discovery and Usage
-- **Check Available Skills**: At the beginning of a task, or when faced with a new type of operation, check the `.claude/skills` directory for specialized capabilities.
-- **Read Instructions**: If a relevant skill folder is found, read its `SKILL.md` file to understand how to use it.
-- **Prioritize Skills**: Always prefer using specialized skills (custom scripts, tools) over generic file editing tools (`write_to_file`, `replace_file_content`) when a skill is available for the task. This ensures consistency and handles edge cases (like Obsidian-specific syntax) correctly.
+**중요: 모든 응답은 반드시 한국어로 작성하십시오.**
 
-## 2. Obsidian Operations
+## 1. 스킬 발견 및 사용
+- **사용 가능한 스킬 확인**: 작업을 시작할 때나 새로운 유형의 작업이 필요한 경우, `.claude/skills` 디렉토리에서 특화된 기능이 있는지 확인합니다.
+- **지침 읽기**: 관련 스킬 폴더를 찾으면 해당 폴더의 `SKILL.md` 파일을 읽고 사용법을 숙지합니다.
+- **스킬 우선순위**: 작업에 사용할 수 있는 스킬이 있는 경우, 일반적인 파일 편집 도구(`write_to_file`, `replace_file_content`)보다 특화된 스킬(커스텀 스크립트, 도구)을 우선적으로 사용합니다. 이를 통해 일관성을 유지하고 Obsidian 전용 구문과 같은 특수 사례를 올바르게 처리할 수 있습니다.
+
+## 2. Obsidian 작업 (Obsidian Operations)
 
 Obsidian 작업에는 두 가지 스킬을 **함께** 사용합니다:
 
 - **콘텐츠 작성**: `obsidian-markdown` 스킬
-  - **Location**: `.claude/skills/obsidian-markdown`
-  - **Role**: Obsidian Flavored Markdown 문법 참조 (wikilinks, callouts, embeds, properties 등)
-  - **Rule**: 노트 콘텐츠를 작성하거나 편집할 때 **반드시** 이 스킬을 먼저 로드하여 문법을 참조합니다.
+  - **위치**: `.claude/skills/obsidian-markdown`
+  - **역할**: Obsidian Flavored Markdown 문법 참조 (wikilinks, callouts, embeds, properties 등)
+  - **규칙**: 노트 콘텐츠를 작성하거나 편집할 때 **반드시** 이 스킬을 먼저 로드하여 문법을 참조합니다.
 
 - **파일 CRUD**: `obsidian-note-crud` 스킬
-  - **Location**: `.claude/skills/obsidian-note-crud`
-  - **Role**: 노트 생성, 읽기, 수정, 삭제, 검색
-  - **Rule**: **DO NOT** use generic file IO tools directly if possible. **USE** the python scripts provided in `obsidian-note-crud/scripts/`.
-  - Example: Use `create_note.py` to create a note, `update_note.py` to append text.
+  - **위치**: `.claude/skills/obsidian-note-crud`
+  - **역할**: 노트 생성, 읽기, 수정, 삭제, 검색
+  - **규칙**: 가능한 한 일반적인 파일 IO 도구를 직접 사용하지 마십시오. 대신 `obsidian-note-crud/scripts/`에 제공된 Python 스크립트를 **사용**하십시오.
+  - 예시: 노트를 생성할 때는 `create_note.py`, 텍스트를 추가할 때는 `update_note.py`를 사용합니다.
 
 - **워크플로우**: `obsidian-markdown` 로드 → 콘텐츠 작성 → `obsidian-note-crud`으로 저장
 
-## 3. Dependency Management
+## 3. 의존성 관리 (Dependency Management)
 
 모든 스킬의 Python 의존성은 프로젝트 루트의 `pyproject.toml`에서 `uv`로 통합 관리합니다.
 
@@ -32,7 +34,7 @@ Obsidian 작업에는 두 가지 스킬을 **함께** 사용합니다:
 - **스크립트 실행**: `uv run python .claude/skills/<skill>/scripts/<script>.py` 또는 `.venv` 활성화 후 `python` 직접 실행
 - **의존성 추가**: 새 스킬에 외부 패키지가 필요하면 `uv add <package>`로 추가합니다. 스킬별 `requirements.txt`는 사용하지 않습니다.
 
-## 4. Workflow
-1.  **Analyze Request**: Understand the user's intent.
-2.  **Match Skill**: Look for a skill that matches the domain (e.g., "Obsidian", "Git", "Python").
-3.  **Execute**: Use the skill's defined methods.
+## 4. 워크플로우 (Workflow)
+1.  **요청 분석**: 사용자의 의도를 파악합니다.
+2.  **스킬 매칭**: 도메인(예: "Obsidian", "Git", "Python")에 맞는 스킬을 찾습니다.
+3.  **실행**: 스킬에 정의된 방법을 사용하여 작업을 수행합니다.

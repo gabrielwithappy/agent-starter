@@ -12,7 +12,17 @@
       "Bash(powershell -Command \"Remove-Item -Path ''d:\\\\00_MyData\\\\obsidianKMS-agent\\\\.claude\\\\skills\\\\obsidian-toolkit'' -Recurse -Force\")",
       "Bash(uv init:*)",
       "Bash(uv sync:*)",
-      "Bash(uv run python:*)"
+      "Bash(uv run python:*)",
+      "Bash(ls:*)",
+      "Bash(xargs:*)",
+      "Bash(gh api:*)",
+      "Bash(git ls-remote:*)",
+      "Bash(if [ -d \".agent/skills\" ])",
+      "Bash(then ls .agent/skills/)",
+      "Bash(else echo \".agent/skills does not exist\")",
+      "Bash(fi)",
+      "Bash(for skill in slack-gif-creator theme-factory web-artifacts-builder webapp-testing xlsx)",
+      "Bash(done)"
     ]
   }
 }
