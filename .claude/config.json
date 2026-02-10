@@ -36,20 +36,12 @@
                 "@wonderwhy-er/desktop-commander"
             ]
         },
-        "google-workspace": {
+        "google-workspace-mcp": {
             "command": "npx",
             "args": [
                 "-y",
-                "@smithery/cli",
-                "run",
-                "@taylorwilsdon/google_workspace_mcp",
-                "--config",
-                "{}"
-            ],
-            "env": {
-                "GOOGLE_OAUTH_CLIENT_ID": "YOUR_CLIENT_ID_HERE",
-                "GOOGLE_OAUTH_CLIENT_SECRET": "YOUR_CLIENT_SECRET_HERE"
-            }
+                "@taylorwilsdon/google_workspace_mcp"
+            ]
         }
     }
 }
