@@ -5,9 +5,26 @@
 **중요: 모든 응답은 반드시 한국어로 작성하십시오.**
 
 ## 1. 스킬 발견 및 사용
-- **사용 가능한 스킬 확인**: 작업을 시작할 때나 새로운 유형의 작업이 필요한 경우, `.claude/skills` 디렉토리에서 특화된 기능이 있는지 확인합니다.
-- **지침 읽기**: 관련 스킬 폴더를 찾으면 해당 폴더의 `SKILL.md` 파일을 읽고 사용법을 숙지합니다.
-- **스킬 우선순위**: 작업에 사용할 수 있는 스킬이 있는 경우, 일반적인 파일 편집 도구(`write_to_file`, `replace_file_content`)보다 특화된 스킬(커스텀 스크립트, 도구)을 우선적으로 사용합니다. 이를 통해 일관성을 유지하고 Obsidian 전용 구문과 같은 특수 사례를 올바르게 처리할 수 있습니다.
+
+### 스킬 인벤토리 참조 (Quick Start)
+**먼저 이 문서부터 확인하세요**: [.claude/skills/SKILLS-INVENTORY.md](./.claude/skills/SKILLS-INVENTORY.md)
+- **목적**: 설치된 모든 스킬의 목적과 기능을 분류별로 정리
+- **구조**: 디자인, 문서, 개발, 콘텐츠 4가지 카테고리로 구분
+- **활용**: 빠른 참조 표와 스킬 선택 가이드 제공
+
+### 상세 정보 확인
+- **SKILL.md 참조**: 각 스킬 폴더의 `SKILL.md` 파일에서 상세 사용법 확인
+- **스킬 우선순위**: 일반 파일 도구(`write_to_file`, `replace_file_content`)보다 특화된 스킬 우선 사용
+  - Obsidian 작업 → `obsidian-markdown` + `obsidian-note-crud` 조합 필수
+  - Word 문서 → `docx` 스킬 필수
+  - 웹 UI 빌드 → `frontend-design` 또는 `web-artifacts-builder` 필수
+
+### 새 스킬 추가 (설치 후 필수)
+새로운 스킬을 설치할 때마다:
+1. 스킬 설치 (GitHub 저장소에서)
+2. `SKILLS-INVENTORY.md`의 적절한 분류 섹션에 추가
+3. 필수 정보: 이름, 목적, 핵심 기능 3-4개
+4. 변경사항 커밋 & 푸시
 
 ## 2. Obsidian 작업 (Obsidian Operations)
 
@@ -50,12 +67,21 @@ Claude Code와 VS Code 확장은 **각각 다른 MCP 설정 파일**을 사용�
 
 Google Workspace MCP를 사용하려면 Google Cloud 프로젝트 설정이 필수입니다:
 
-**필수 환경변수** (`.env.local` 또는 시스템 환경변수):
+**⚠️ 중요: uvx는 .env.local을 읽지 않습니다**
+
+`uvx workspace-mcp`로 실행되므로 **시스템 환경변수**를 사용해야 합니다:
+
+**Windows PowerShell (관리자 권한)**:
+```powershell
+[Environment]::SetEnvironmentVariable("GOOGLE_OAUTH_CLIENT_ID", "YOUR_CLIENT_ID", "User")
+[Environment]::SetEnvironmentVariable("GOOGLE_OAUTH_CLIENT_SECRET", "YOUR_CLIENT_SECRET", "User")
+[Environment]::SetEnvironmentVariable("OAUTHLIB_INSECURE_TRANSPORT", "1", "User")
 ```
-GOOGLE_OAUTH_CLIENT_ID=YOUR_CLIENT_ID
-GOOGLE_OAUTH_CLIENT_SECRET=YOUR_CLIENT_SECRET
-OAUTHLIB_INSECURE_TRANSPORT=1  # 개발 환경에서만
-```
+
+**또는 GUI**:
+1. Windows 검색에서 "환경 변수" 검색
+2. "사용자 환경 변수 편집" 클릭
+3. "새로 만들기" 버튼으로 각 변수 추가
 
 **Google Cloud 설정 단계**:
 1. [Google Cloud Console](https://console.cloud.google.com/) 접속
