@@ -37,10 +37,11 @@
             ]
         },
         "google-workspace-mcp": {
-            "command": "npx",
+            "command": "uvx",
             "args": [
-                "-y",
-                "@taylorwilsdon/google_workspace_mcp"
+                "workspace-mcp",
+                "--tool-tier",
+                "core"
             ]
         }
     }
