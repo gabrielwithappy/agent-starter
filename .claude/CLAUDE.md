@@ -7,7 +7,7 @@
 ## 1. 스킬 발견 및 사용
 
 ### 스킬 인벤토리 참조 (Quick Start)
-**먼저 이 문서부터 확인하세요**: [.claude/skills/SKILLS-INVENTORY.md](./.claude/skills/SKILLS-INVENTORY.md)
+**먼저 이 문서부터 확인하세요**: [SKILLS-INVENTORY.md](../SKILLS-INVENTORY.md)
 - **목적**: 설치된 모든 스킬의 목적과 기능을 분류별로 정리
 - **구조**: 디자인, 문서, 개발, 콘텐츠 4가지 카테고리로 구분
 - **활용**: 빠른 참조 표와 스킬 선택 가이드 제공
@@ -19,12 +19,29 @@
   - Word 문서 → `docx` 스킬 필수
   - 웹 UI 빌드 → `frontend-design` 또는 `web-artifacts-builder` 필수
 
-### 새 스킬 추가 (설치 후 필수)
-새로운 스킬을 설치할 때마다:
-1. 스킬 설치 (GitHub 저장소에서)
-2. `SKILLS-INVENTORY.md`의 적절한 분류 섹션에 추가
-3. 필수 정보: 이름, 목적, 핵심 기능 3-4개
+### 새 스킬 추가 가이드
+
+#### 외부 스킬 설치 (plugin-manager 사용)
+새로운 스킬을 GitHub에서 설치할 때:
+```bash
+python .claude/skills/plugin-manager/scripts/manage.py install --git-url "https://github.com/owner/repo"
+```
+**자동 처리**: plugin-manager가 `SKILLS-INVENTORY.md`를 자동으로 업데이트합니다.
+
+#### 로컬 스킬 생성
+새로운 로컬 스킬을 직접 만들 때:
+1. `.claude/skills/[skill-name]/` 폴더 생성
+2. 다음 파일들 작성:
+   - `SKILL.md`: 스킬 설명과 frontmatter 포함
+   - `README.md`: 사용 가이드 (선택사항)
+   - `scripts/`: Python 스크립트 및 리소스
+3. **필수**: `SKILLS-INVENTORY.md`의 "Local Custom Skills" 섹션에 수동 추가
 4. 변경사항 커밋 & 푸시
+
+**Local Custom Skills 항목 추가 형식**:
+```markdown
+| **skill-name** | 스킬의 목적 설명 | 핵심 기능 1, 기능 2, 기능 3 |
+```
 
 ## 2. Obsidian 작업 (Obsidian Operations)
 
