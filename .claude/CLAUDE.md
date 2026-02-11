@@ -80,7 +80,24 @@ Claude Code와 VS Code 확장은 **각각 다른 MCP 설정 파일**을 사용�
 - **VS Code 확장 사용 시**: `.vscode/mcp.json`의 `servers` 섹션을 수정합니다
 - 두 도구를 동시에 사용하는 경우, **각 설정 파일을 별도로 관리**해야 합니다
 
-## 5. 워크플로우 (Workflow)
+## 5. 템플릿 (Templates)
+
+`.claude/templates/` 디렉토리에는 프로젝트 간 재사용 가능한 템플릿이 포함되어 있습니다.
+
+### AI Context 템플릿
+- **파일**: `.claude/templates/(Context) AI Context Template.md`
+- **용도**: AI가 참고하는 배경 지식 문서 작성용
+- **적용 범위**: 개발, 문서 작성, 자산 관리 등 모든 도메인
+- **특징**: 정보 생애주기 관리 및 Context 크기 최적화 내장
+
+### 사용법
+1. 템플릿 파일을 프로젝트 적절한 위치에 복사
+2. `[주제명]` 및 frontmatter 수정
+3. 업무 중 발견한 정보를 점진적으로 추가
+
+자세한 사항은 `.claude/rules/obsidian.md` 참조 (Obsidian 환경인 경우)
+
+## 6. 워크플로우 (Workflow)
 1.  **요청 분석**: 사용자의 의도를 파악합니다.
 2.  **스킬 매칭**: 도메인(예: "Obsidian", "Git", "Python")에 맞는 스킬을 찾습니다.
 3.  **실행**: 스킬에 정의된 방법을 사용하여 작업을 수행합니다.
