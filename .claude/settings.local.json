@@ -22,7 +22,9 @@
       "Bash(else echo \".agent/skills does not exist\")",
       "Bash(fi)",
       "Bash(for skill in slack-gif-creator theme-factory web-artifacts-builder webapp-testing xlsx)",
-      "Bash(done)"
+      "Bash(done)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)"
     ]
   }
 }
