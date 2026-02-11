@@ -1,14 +1,5 @@
 {
 	"servers": {
-		"google-workspace-mcp": {
-			"type": "stdio",
-			"command": "uvx",
-			"args": [
-				"workspace-mcp",
-				"--tool-tier",
-				"core"
-			]
-		},
 		"microsoft/markitdown": {
 			"type": "stdio",
 			"command": "uvx",

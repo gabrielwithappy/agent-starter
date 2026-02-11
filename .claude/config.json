@@ -35,14 +35,6 @@
                 "-y",
                 "@wonderwhy-er/desktop-commander"
             ]
-        },
-        "google-workspace-mcp": {
-            "command": "uvx",
-            "args": [
-                "workspace-mcp",
-                "--tool-tier",
-                "core"
-            ]
         }
     }
 }
