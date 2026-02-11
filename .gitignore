@@ -83,3 +83,6 @@ data/
 
 # Git submodule config (legacy)
 .gitmodules
+
+# Skill runtime outputs
+.claude/skills/plugin-manager/output/
