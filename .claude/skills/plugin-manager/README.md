@@ -1,7 +1,7 @@
 ---
 tags: 30_Resources
 ---
-# Git Skill Manager
+# Plugin Manager
 
 Install and manage Claude skills directly from GitHub repositories.
 
@@ -24,40 +24,38 @@ python .claude/skills/plugin-manager/scripts/manage.py uninstall --skill-name "j
 
 ## Features
 
-- ??Install skills from any public GitHub repository
-- ??Automatic installation to `.claude/skills` directory
-- ??Track installed skills in a registry
-- ??List all installed skills with metadata
-- ??Remove skills you no longer need
-- ??Command-line interface (CLI)
+- Install skills from any public GitHub repository
+- Automatic installation to `.claude/skills` directory
+- Track installed skills in a registry
+- List all installed skills with metadata
+- Remove skills you no longer need
+- Command-line interface (CLI)
 
 ## Documentation
 
 For detailed usage instructions, see [SKILL.md](SKILL.md).
 
-For quick command reference, see [references/QUICKREF.md](references/QUICKREF.md).
-
 ## Requirements
 
 - Python 3.6+
 - Internet connection (for GitHub API access)
+- Git (for cloning repositories)
 
 ## Structure
 
 ```
 plugin-manager/
-?œâ??€ SKILL.md              # Main skill documentation
-?œâ??€ README.md             # This file
-?œâ??€ scripts/              # Executable scripts
-??  ?œâ??€ manage.py        # Main management script
-??  ?œâ??€ example.py       # Usage examples
-??  ?”â??€ validate.py      # Validation script
-?œâ??€ assets/               # Data and templates
-??  ?”â??€ registry.json    # Installation registry
-?”â??€ references/           # Reference documentation
-    ?œâ??€ QUICKREF.md      # Quick reference
-    ?œâ??€ MIGRATION.md     # Migration guide
-    ?”â??€ COMPLETION.md    # Completion report
+â”œâ”€â”€ SKILL.md              # Main skill documentation
+â”œâ”€â”€ README.md             # This file
+â”œâ”€â”€ scripts/              # Executable scripts
+â”‚   â”œâ”€â”€ manage.py         # Main management script
+â”‚   â”œâ”€â”€ example.py        # Usage examples
+â”‚   â””â”€â”€ validate.py       # Validation script
+â”œâ”€â”€ assets/               # Data and templates
+â”‚   â””â”€â”€ registry.json     # Installation registry
+â”œâ”€â”€ commands/             # Command implementations
+â”œâ”€â”€ output/               # Runtime output (gitignored)
+â””â”€â”€ repos/                # Cloned repositories
 ```
 
 ## License
