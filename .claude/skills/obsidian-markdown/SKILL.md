@@ -295,6 +295,108 @@ Example with tabs:
 	- [x] Subtask 2
 ```
 
+## Tasks Plugin (Obsidian Tasks)
+
+The [Obsidian Tasks](https://obsidian-tasks-plugin.github.io/) plugin extends basic task lists with powerful metadata and filtering capabilities. These work with standard task list syntax but offer additional features when the plugin is installed.
+
+### Basic Tasks (No Plugin Required)
+
+```markdown
+- [ ] Basic incomplete task
+- [x] Completed task
+- [ ] Task with description text here
+```
+
+### Tasks Plugin Syntax (Plugin Required)
+
+When the Tasks plugin is installed, you can use these additional metadata tags:
+
+#### Due Date
+
+```markdown
+- [ ] Submit report 📅 2026-02-15
+- [ ] Meeting tomorrow 📅 2026-02-12
+```
+
+#### Start Date
+
+```markdown
+- [ ] Project starts 🛫 2026-02-10
+```
+
+#### Scheduled Date
+
+```markdown
+- [ ] Review notes ⏳ 2026-02-14
+```
+
+#### Done Date
+
+```markdown
+- [x] Completed task ✅ 2026-02-11
+```
+
+#### Priority
+
+```markdown
+- [ ] Critical task 🔴 (highest priority)
+- [ ] Important task 🟠
+- [ ] Normal task 🟡
+- [ ] Low priority 🟢
+```
+
+#### Recurrence
+
+```markdown
+- [ ] Weekly meeting 🔁 every week on Monday
+- [ ] Monthly report 🔁 every month on the 1st
+- [ ] Daily standup 🔁 every day
+- [ ] Quarterly review 🔁 every 3 months
+```
+
+#### Tags
+
+```markdown
+- [ ] Design mockup 🏷️ #design #urgent
+- [ ] Code review 🏷️ #development #review
+```
+
+#### Combined Example
+
+```markdown
+- [ ] Submit quarterly report 📅 2026-03-31 🔁 every 3 months 🏷️ #work #report 🔴
+- [ ] Team meeting 📅 2026-02-14 🔁 every Friday ⏰ 2026-02-14T10:00 🟠
+```
+
+### Task Query Blocks (Plugin Required)
+
+Display filtered tasks using query blocks:
+
+````markdown
+```tasks
+due before tomorrow
+status.type is done
+hide backlink
+group by filename
+```
+````
+
+Common query options:
+
+```markdown
+due before 2026-02-15
+due after 2026-02-01
+status is done
+status is todo
+priority is high
+has tag #work
+path includes Daily
+group by filename
+sort by due
+hide backlink
+hide priority
+```
+
 ## Quotes
 
 ```markdown
