@@ -242,13 +242,30 @@ tag:#project status:done
 
 ## Lists
 
+### Nested Lists and Indentation
+
+For proper depth representation in Obsidian, use **TAB characters** for indentation rather than spaces.
+
+- Obsidian renders nested list depth based on tab indentation
+- Each tab level represents one level of nesting
+- This ensures consistent rendering across different editors and sync clients
+
+Example with tabs:
+```markdown
+- Item 1
+	- Nested item (indented with TAB)
+	- Another nested item
+		- Double nested (2 TABs)
+- Item 2
+```
+
 ### Unordered Lists
 
 ```markdown
 - Item 1
 - Item 2
-  - Nested item
-  - Another nested
+	- Nested item (indented with TAB)
+	- Another nested
 - Item 3
 
 * Also works with asterisks
@@ -274,8 +291,8 @@ tag:#project status:done
 - [ ] Incomplete task
 - [x] Completed task
 - [ ] Task with sub-tasks
-  - [ ] Subtask 1
-  - [x] Subtask 2
+	- [ ] Subtask 1 (indented with TAB)
+	- [x] Subtask 2
 ```
 
 ## Quotes
