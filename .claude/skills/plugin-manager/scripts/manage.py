@@ -14,7 +14,6 @@ GitHub 저장소를 repos/에 clone하고 필요한 skill을 .claude/skills/로 
 """
 
 import json
-import os
 import sys
 import io
 import subprocess
@@ -39,6 +38,10 @@ REGISTRY_PATH = PLUGIN_MANAGER_DIR / "assets" / "registry.json"
 
 # .claude/skills/ directory (two levels up from plugin-manager)
 SKILLS_DIR = PLUGIN_MANAGER_DIR.parent
+
+# Project root (three levels up from plugin-manager)
+PROJECT_ROOT = PLUGIN_MANAGER_DIR.parent.parent
+SKILLS_INVENTORY_PATH = PROJECT_ROOT / "SKILLS-INVENTORY.md"
 
 REGISTRY_VERSION = "2.0.0"
 
@@ -272,6 +275,32 @@ def remove_plugin_from_registry(registry: Dict[str, Any], plugin_name: str) -> b
 
 
 # ──────────────────────────────────────────────
+# SKILLS-INVENTORY.md Management
+# ──────────────────────────────────────────────
+
+def print_inventory_update_reminder(action: str, skills: List[str]) -> None:
+    """Print reminder to update SKILLS-INVENTORY.md manually"""
+    print(f"\n{'='*60}")
+    print("[REMINDER] Update SKILLS-INVENTORY.md")
+    print('='*60)
+    print(f"\nAction: {action.upper()}")
+    print(f"Skills: {', '.join(skills)}")
+    print(f"\nLocation: {SKILLS_INVENTORY_PATH}")
+    print("\nNext step:")
+    if action == "install":
+        print("  1. Open SKILLS-INVENTORY.md")
+        print("  2. Find the appropriate category section (Design, Documents, Development, Content)")
+        print("  3. Add the new skills to the category table")
+        print("  4. Update the Summary section (Total Managed Skills count)")
+    elif action == "uninstall":
+        print("  1. Open SKILLS-INVENTORY.md")
+        print("  2. Remove the skills from their category tables")
+        print("  3. Update the Summary section (Total Managed Skills count)")
+    print(f"\nOr run: git add SKILLS-INVENTORY.md && git commit -m 'docs: update skills inventory'")
+    print("="*60 + "\n")
+
+
+# ──────────────────────────────────────────────
 # File Copy
 # ──────────────────────────────────────────────
 
@@ -380,6 +409,9 @@ def cmd_install(git_url: str, plugin_name: Optional[str] = None) -> Dict[str, An
     for s in skills:
         print(f"  - {s}")
 
+    # Remind user to update SKILLS-INVENTORY.md
+    print_inventory_update_reminder("install", skills)
+
     return {"status": "success", "plugin": plugin_name, "skills": skills, "commit": commit_hash}
 
 
@@ -412,6 +444,10 @@ def cmd_uninstall(plugin_name: str) -> Dict[str, Any]:
     save_registry(registry)
 
     print(f"[OK] Plugin '{plugin_name}' uninstalled")
+
+    # Remind user to update SKILLS-INVENTORY.md
+    print_inventory_update_reminder("uninstall", skills)
+
     return {"status": "success", "plugin": plugin_name, "removed_skills": removed}
 
 
@@ -480,7 +516,7 @@ def cmd_update(plugin_name: Optional[str] = None) -> Dict[str, Any]:
             continue
 
         # Re-copy
-        copied = copy_skills_to_target(clone_dir, prefix, skills, SKILLS_DIR)
+        copy_skills_to_target(clone_dir, prefix, skills, SKILLS_DIR)
 
         # Update plugin info
         plugin["skill_prefix"] = prefix
