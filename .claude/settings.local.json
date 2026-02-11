@@ -24,7 +24,9 @@
       "Bash(for skill in slack-gif-creator theme-factory web-artifacts-builder webapp-testing xlsx)",
       "Bash(done)",
       "WebFetch(domain:github.com)",
-      "WebFetch(domain:raw.githubusercontent.com)"
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(git -C d:\\\\00_MyData\\\\obsidianKMS-agent status)",
+      "WebFetch(domain:help.obsidian.md)"
     ]
   }
 }
