@@ -7,7 +7,7 @@
 ## 1. 스킬 발견 및 사용
 
 ### 스킬 인벤토리 참조 (Quick Start)
-**먼저 이 문서부터 확인하세요**: [SKILLS-INVENTORY.md](../SKILLS-INVENTORY.md)
+**먼저 이 문서부터 확인하세요**: [SKILLS-INVENTORY.md](./SKILLS-INVENTORY.md)
 - **목적**: 설치된 모든 스킬의 목적과 기능을 분류별로 정리
 - **구조**: 디자인, 문서, 개발, 콘텐츠 4가지 카테고리로 구분
 - **활용**: 빠른 참조 표와 스킬 선택 가이드 제공

@@ -39,9 +39,9 @@ REGISTRY_PATH = PLUGIN_MANAGER_DIR / "assets" / "registry.json"
 # .claude/skills/ directory (two levels up from plugin-manager)
 SKILLS_DIR = PLUGIN_MANAGER_DIR.parent
 
-# Project root (three levels up from plugin-manager)
-PROJECT_ROOT = PLUGIN_MANAGER_DIR.parent.parent
-SKILLS_INVENTORY_PATH = PROJECT_ROOT / "SKILLS-INVENTORY.md"
+# .claude directory (one level up from plugin-manager)
+CLAUDE_DIR = PLUGIN_MANAGER_DIR.parent
+SKILLS_INVENTORY_PATH = CLAUDE_DIR / "SKILLS-INVENTORY.md"
 
 REGISTRY_VERSION = "2.0.0"
 
