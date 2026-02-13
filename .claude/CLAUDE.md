@@ -17,13 +17,14 @@
 ### 핵심 디렉토리
 - `obsidianKMS/`: PARA 구조 노트 저장소 (Projects, Areas, Resources, Archives)
 - `.claude/skills/`: 도메인별 특화 스킬
-- `.claude/rules/`: 작업 도메인별 규칙
 
 ---
 
 ## 스킬 시스템
 
-**[SKILLS-INVENTORY.md](./SKILLS-INVENTORY.md)**: 24개 스킬 카탈로그 및 선택 가이드
+이 프로젝트는 24개의 특화 스킬을 제공합니다 (문서, 개발, 디자인).
+
+**전체 스킬 카탈로그**: [SKILLS-INVENTORY.md](./SKILLS-INVENTORY.md)
 
 ---
 
@@ -38,8 +39,6 @@
 - **기본 생성 위치**: `obsidianKMS/0.Inbox/`
 - **Frontmatter 필수**: `created`, `tags`
 - **도구 우선순위**: `obsidian-note-crud` 스크립트 > 일반 파일 IO
-
-**상세 규칙**: [rules/obsidian.md](./rules/obsidian.md)
 
 ### AI Context 관리
 Context 문서 생성/검색/업데이트는 **`context-manager` 스킬** 사용
@@ -56,9 +55,3 @@ Context 문서 생성/검색/업데이트는 **`context-manager` 스킬** 사용
 - **Claude Code CLI**: `.claude/config.json`
 - **VS Code 확장**: `.vscode/mcp.json`
 
----
-
-## 참조 문서
-
-- **[SKILLS-INVENTORY.md](./SKILLS-INVENTORY.md)**: 전체 스킬 카탈로그
-- **[rules/obsidian.md](./rules/obsidian.md)**: Obsidian 작업 규칙
