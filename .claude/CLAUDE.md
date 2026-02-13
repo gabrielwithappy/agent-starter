@@ -21,16 +21,6 @@
 
 ---
 
-## 핵심 작업 유형 (WHY)
-
-1. **Obsidian 노트 관리**: 생성/편집/검색/메타데이터 관리
-2. **문서 자동화**: Word, PDF, PowerPoint 생성/변환
-3. **웹 UI 개발**: React, HTML/CSS 컴포넌트
-4. **다이어그램**: PlantUML, JSON Canvas
-5. **AI Context 관리**: 프로젝트별 배경 지식 문서화
-
----
-
 ## 스킬 시스템
 
 **[SKILLS-INVENTORY.md](./SKILLS-INVENTORY.md)**: 24개 스킬 카탈로그 및 선택 가이드
