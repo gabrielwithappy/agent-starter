@@ -27,7 +27,8 @@
       "WebFetch(domain:raw.githubusercontent.com)",
       "Bash(git -C d:\\\\00_MyData\\\\obsidianKMS-agent status)",
       "WebFetch(domain:help.obsidian.md)",
-      "Bash(dir:*)"
+      "Bash(dir:*)",
+      "WebFetch(domain:news.hada.io)"
     ]
   }
 }

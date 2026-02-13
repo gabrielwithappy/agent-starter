@@ -18,8 +18,6 @@
 - `obsidianKMS/`: PARA 구조 노트 저장소 (Projects, Areas, Resources, Archives)
 - `.claude/skills/`: 도메인별 특화 스킬
 - `.claude/rules/`: 작업 도메인별 규칙
-- `.claude/docs/`: 상세 가이드 문서
-- `.claude/templates/`: 재사용 템플릿
 
 ---
 
