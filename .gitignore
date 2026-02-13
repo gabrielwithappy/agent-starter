@@ -86,3 +86,7 @@ data/
 
 # Skill runtime outputs
 .claude/skills/plugin-manager/output/
+
+# Skill workspace (임시 파일 및 산출물)
+.claude/skills/workspace/*/temp/
+.claude/skills/workspace/*/output/
