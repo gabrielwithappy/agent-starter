@@ -8,8 +8,6 @@
 2. **콘텐츠 작성** → 위키링크, callout, embed 등 Obsidian 문법 준수
 3. **`obsidian-note-crud` 스크립트 실행** → 노트 생성/수정/삭제
 
-**NEVER** use standard file tools (`Write`, `Edit`) for Obsidian notes.
-
 ---
 
 ## 세부 규칙
