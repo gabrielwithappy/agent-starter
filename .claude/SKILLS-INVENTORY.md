@@ -60,6 +60,7 @@
 
 | 스킬 | 목적 | 핵심 기능 |
 |------|------|---------|
+| **context-manager** | AI Context 문서 관리 | Context 생성/검색/업데이트, 대화 간 지식 보존 |
 | **obsidian-note-crud** | 노트 레벨 CRUD 작업 | Python 스크립트: 생성, 읽기, 수정, 삭제, 검색, 태그 관리 |
 | **obsidian-frontmatter** | Frontmatter 메타데이터 검색 & 관리 | 속성으로 노트 찾기, frontmatter 생성/수정/삭제 |
 | **plantuml-ascii** | ASCII 아트 다이어그램 생성 | PlantUML을 ASCII로 변환, 시퀀스/클래스/플로우 다이어그램 |
@@ -75,6 +76,7 @@
 1. obsidian-markdown 로드 → 마크다운 문법 참조
 2. obsidian-note-crud → 노트 생성/수정 스크립트 실행
 3. obsidian-frontmatter → 메타데이터 관리
+4. context-manager → AI Context 문서 관리 (대화 간 지식 보존)
 ```
 
 ### 웹 UI 빌드
