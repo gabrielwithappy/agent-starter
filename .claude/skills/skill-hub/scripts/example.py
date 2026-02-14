@@ -28,7 +28,7 @@ def run_command(cmd):
 def main():
     """메인 함수"""
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    manage_script = os.path.join(script_dir, 'manage.py')
+    manage_script = os.path.join(script_dir, 'hub.py')
     
     print("\n🎯 Install Git Plugin Skill 사용 예시\n")
     
@@ -52,9 +52,9 @@ def main():
     print("✅ 예시 완료!")
     print("="*60)
     print("\n실제 사용 예시:")
-    print("  - 설치: python manage.py install --git-url \"https://github.com/user/repo\"")
-    print("  - 목록: python manage.py list")
-    print("  - 제거: python manage.py uninstall --skill-name \"skill-name\"")
+    print("  - 설치: python hub.py install --git-url \"https://github.com/user/repo\"")
+    print("  - 목록: python hub.py list")
+    print("  - 제거: python hub.py uninstall --skill-name \"skill-name\"")
     print()
 
 if __name__ == '__main__':

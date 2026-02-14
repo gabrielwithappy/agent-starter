@@ -1,25 +1,25 @@
 ---
 tags: 30_Resources
 ---
-# Plugin Manager
+# Skill Hub
 
-Install and manage Claude skills directly from GitHub repositories.
+Git 저장소에서 스킬을 설치하고 로컬 스킬을 통합 관리하는 중앙 허브입니다.
 
 ## Quick Start
 
 ### Install a Skill
 ```bash
-python .claude/skills/plugin-manager/scripts/manage.py install --git-url "https://github.com/kepano/obsidian-skills"
+python .claude/skills/skill-hub/scripts/hub.py install --git-url "https://github.com/kepano/obsidian-skills"
 ```
 
 ### List Installed Skills
 ```bash
-python .claude/skills/plugin-manager/scripts/manage.py list
+python .claude/skills/skill-hub/scripts/hub.py list
 ```
 
 ### Remove a Skill
 ```bash
-python .claude/skills/plugin-manager/scripts/manage.py uninstall --skill-name "json-canvas"
+python .claude/skills/skill-hub/scripts/hub.py uninstall --skill-name "json-canvas"
 ```
 
 ## Features
@@ -44,11 +44,11 @@ For detailed usage instructions, see [SKILL.md](SKILL.md).
 ## Structure
 
 ```
-plugin-manager/
+skill-hub/
 ├── SKILL.md              # Main skill documentation
 ├── README.md             # This file
 ├── scripts/              # Executable scripts
-│   ├── manage.py         # Main management script
+│   ├── hub.py            # Main management script
 │   ├── example.py        # Usage examples
 │   └── validate.py       # Validation script
 ├── assets/               # Data and templates

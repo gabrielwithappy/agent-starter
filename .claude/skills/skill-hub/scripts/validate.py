@@ -95,7 +95,7 @@ def main():
         (check_file_exists, (os.path.join(skill_dir, 'README.md'), 'README 파일')),
         (check_directory_exists, (os.path.join(skill_dir, 'scripts'), 'scripts 디렉토리')),
         (check_directory_exists, (os.path.join(skill_dir, 'assets'), 'assets 디렉토리')),
-        (check_file_exists, (os.path.join(skill_dir, 'scripts', 'manage.py'), '메인 스크립트')),
+        (check_file_exists, (os.path.join(skill_dir, 'scripts', 'hub.py'), '메인 스크립트')),
         (check_file_exists, (os.path.join(skill_dir, 'assets', 'registry.json'), 'registry 파일')),
     ]
     
@@ -116,7 +116,7 @@ def main():
         score += 1
     
     total += 1
-    if check_script_executable(os.path.join(skill_dir, 'scripts', 'manage.py')):
+    if check_script_executable(os.path.join(skill_dir, 'scripts', 'hub.py')):
         score += 1
     
     print("\n🚫 제거된 파일 확인 (없어야 함):")

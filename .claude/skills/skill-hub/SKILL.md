@@ -1,23 +1,24 @@
 ---
-name: plugin-manager
-description: Install, manage, and remove Claude skills from GitHub repositories. Use when adding new skills from Git or managing installed skills.
+name: skill-hub
+description: Git 저장소에서 스킬을 설치하고 로컬 스킬을 통합 관리하는 중앙 허브. Use when: (1) Git 저장소에서 스킬 설치, (2) 로컬 제작 스킬 등록, (3) 전체 스킬 목록 조회 (Git + 로컬), (4) 스킬 업데이트/삭제, (5) SKILLS-INVENTORY.md 자동 생성
 license: MIT
 metadata:
   author: agent-starter
-  version: 2.0.0
+  version: 3.0.0
   keywords:
   - git
   - github
   - skill
   - installation
   - management
-  - plugin
-allowed-tools: Bash(python:*) Bash(git:*) Read Write
+  - hub
+  - registry
+allowed-tools: Bash(python:*) Bash(git:*) Read Write Edit
 tags: 30_Resources
 ---
-# Plugin Manager v2.0.0
+# Skill Hub v3.0.0
 
-Install, update, and remove Claude skills from GitHub repositories. Uses Git-based cloning to store repositories in `repos/` and copies required skills to `.claude/skills/`.
+Git 저장소에서 스킬을 설치하고 로컬에서 직접 만든 스킬을 통합 관리하는 중앙 허브입니다. Git 기반 클로닝으로 저장소를 `repos/`에 저장하고, 필요한 스킬을 `.claude/skills/`에 복사합니다.
 
 ## Requirements
 
@@ -29,20 +30,28 @@ Install, update, and remove Claude skills from GitHub repositories. Uses Git-bas
 
 ### Install
 
-Install a skill from a GitHub repository:
+Install skills from a GitHub repository:
 
 ```bash
-python .claude/skills/plugin-manager/scripts/manage.py install --git-url "https://github.com/owner/repo"
+# Install all skills from repository
+python .claude/skills/skill-hub/scripts/hub.py install --git-url "https://github.com/owner/repo"
+
+# Install specific skills only
+python .claude/skills/skill-hub/scripts/hub.py install --git-url "https://github.com/owner/repo" --skills "docx,pdf,xlsx"
 ```
 
 Optional parameters:
 - `--plugin-name`: Custom plugin name (default: repository name)
+- `--skills`: Comma-separated list of specific skills to install (if omitted, all skills are installed)
 
 Behavior:
 1. Shallow clone (`--depth 1`) to `repos/owner-repo/`
 2. Auto-detect skill directory (`.claude/skills/` > `.agent/skills/` > `skills/`)
-3. Copy only skills with SKILL.md to `.claude/skills/`
-4. Record installation info and commit hash in registry.json
+3. Discover all available skills in repository
+4. Install selected skills (or all if `--skills` not specified)
+5. Copy only skills with SKILL.md to `.claude/skills/`
+6. Record installation info and commit hash in registry.json
+7. **Automatically update SKILLS-INVENTORY.md** with installed skills
 
 ### Update
 
@@ -50,10 +59,10 @@ Update installed plugins to the latest version:
 
 ```bash
 # Update all plugins
-python .claude/skills/plugin-manager/scripts/manage.py update
+python .claude/skills/skill-hub/scripts/hub.py update
 
 # Update specific plugin
-python .claude/skills/plugin-manager/scripts/manage.py update --plugin-name "skills"
+python .claude/skills/skill-hub/scripts/hub.py update --plugin-name "skills"
 ```
 
 Behavior:
@@ -66,7 +75,7 @@ Behavior:
 Remove all skills associated with a plugin:
 
 ```bash
-python .claude/skills/plugin-manager/scripts/manage.py uninstall --plugin-name "skills"
+python .claude/skills/skill-hub/scripts/hub.py uninstall --plugin-name "skills"
 ```
 
 Behavior:
@@ -79,7 +88,7 @@ Behavior:
 Display installed plugins and skills:
 
 ```bash
-python .claude/skills/plugin-manager/scripts/manage.py list
+python .claude/skills/skill-hub/scripts/hub.py list
 ```
 
 Output: Plugin name, repository URL, commit hash, installation/update time, list of included skills
@@ -89,7 +98,7 @@ Output: Plugin name, repository URL, commit hash, installation/update time, list
 ### Install Official Anthropic Skills
 
 ```bash
-python .claude/skills/plugin-manager/scripts/manage.py install --git-url "https://github.com/anthropics/skills"
+python .claude/skills/skill-hub/scripts/hub.py install --git-url "https://github.com/anthropics/skills"
 ```
 
 Output:
@@ -103,13 +112,24 @@ Copied 16 skills to .claude/skills
 ### Install Obsidian Skills
 
 ```bash
-python .claude/skills/plugin-manager/scripts/manage.py install --git-url "https://github.com/kepano/obsidian-skills"
+# Install all Obsidian skills
+python .claude/skills/skill-hub/scripts/hub.py install --git-url "https://github.com/kepano/obsidian-skills"
+
+# Or install only specific skills
+python .claude/skills/skill-hub/scripts/hub.py install --git-url "https://github.com/kepano/obsidian-skills" --skills "obsidian-markdown,obsidian-note-crud"
+```
+
+### Install Google Workspace Skills (Selective)
+
+```bash
+# Install only Google Calendar and Gmail skills
+python .claude/skills/skill-hub/scripts/hub.py install --git-url "https://github.com/sanjay3290/ai-skills" --skills "google-calendar,gmail"
 ```
 
 ### Update All Plugins
 
 ```bash
-python .claude/skills/plugin-manager/scripts/manage.py update
+python .claude/skills/skill-hub/scripts/hub.py update
 ```
 
 ## Registry (registry.json)
@@ -149,7 +169,7 @@ v1.0.0 registry automatically migrates to v2.0.0 on first run.
 ## File Structure
 
 ```
-plugin-manager/
+skill-hub/
 ├── SKILL.md              # This file
 ├── README.md             # Quick start guide
 ├── repos/                # Git cloned repositories
@@ -157,7 +177,7 @@ plugin-manager/
 │   ├── anthropics-skills/
 │   └── kepano-obsidian-skills/
 ├── scripts/
-│   ├── manage.py         # Main CLI script
+│   ├── hub.py            # Main CLI script
 │   ├── example.py        # Usage examples
 │   └── validate.py       # Validation script
 ├── assets/

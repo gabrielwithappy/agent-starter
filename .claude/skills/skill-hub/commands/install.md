@@ -8,7 +8,7 @@ Install skills from a GitHub repository via git clone.
 ## Usage
 
 ```powershell
-python .claude/skills/plugin-manager/scripts/manage.py install --git-url "$ARGUMENTS"
+python .claude/skills/skill-hub/scripts/hub.py install --git-url "$ARGUMENTS"
 ```
 
 Optional: `--plugin-name "custom-name"` to override the default repo name.
@@ -16,8 +16,8 @@ Optional: `--plugin-name "custom-name"` to override the default repo name.
 ## Examples
 
 ```
-/plugin-manager:install https://github.com/anthropics/skills
-/plugin-manager:install https://github.com/kepano/obsidian-skills
+/skill-hub:install https://github.com/anthropics/skills
+/skill-hub:install https://github.com/kepano/obsidian-skills
 ```
 
 The command clones the repo, detects skill directories, and copies them to `.claude/skills/`.

@@ -17,8 +17,8 @@ You can open these files directly to view complete plugin information without te
 
 ```powershell
 # View latest marketplace listing
-notepad .agent/skills/plugin-manager/output/marketplace_*.txt
+notepad .agent/skills/skill-hub/output/marketplace_*.txt
 
 # View search results
-notepad .agent/skills/plugin-manager/output/search_*.txt
+notepad .agent/skills/skill-hub/output/search_*.txt
 ```

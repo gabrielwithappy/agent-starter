@@ -8,7 +8,7 @@ Display all installed plugins with commit hash and skill details.
 ## Usage
 
 ```powershell
-python .claude/skills/plugin-manager/scripts/manage.py list
+python .claude/skills/skill-hub/scripts/hub.py list
 ```
 
 Shows: plugin name, repository URL, commit hash, install/update timestamps, and skill list.
@@ -16,5 +16,5 @@ Shows: plugin name, repository URL, commit hash, install/update timestamps, and 
 ## Example
 
 ```
-/plugin-manager:list
+/skill-hub:list
 ```

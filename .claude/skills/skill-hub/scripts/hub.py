@@ -7,10 +7,10 @@ Git clone + shutil.copytree 기반 스킬 관리자.
 GitHub 저장소를 repos/에 clone하고 필요한 skill을 .claude/skills/로 복사합니다.
 
 사용 예시:
-  설치:   python manage.py install --git-url "https://github.com/anthropics/skills"
-  업데이트: python manage.py update
-  제거:   python manage.py uninstall --plugin-name "skills"
-  목록:   python manage.py list
+  설치:   python hub.py install --git-url "https://github.com/anthropics/skills"
+  업데이트: python hub.py update
+  제거:   python hub.py uninstall --plugin-name "skills"
+  목록:   python hub.py list
 """
 
 import json
@@ -36,12 +36,12 @@ PLUGIN_MANAGER_DIR = SCRIPT_DIR.parent
 REPOS_DIR = PLUGIN_MANAGER_DIR / "repos"
 REGISTRY_PATH = PLUGIN_MANAGER_DIR / "assets" / "registry.json"
 
-# .claude/skills/ directory (two levels up from plugin-manager)
+# .claude/skills/ directory (two levels up from skill-hub)
 SKILLS_DIR = PLUGIN_MANAGER_DIR.parent
 
-# .claude directory (one level up from plugin-manager)
+# .claude directory (one level up from skill-hub)
 CLAUDE_DIR = PLUGIN_MANAGER_DIR.parent
-SKILLS_INVENTORY_PATH = CLAUDE_DIR / "SKILLS-INVENTORY.md"
+SKILLS_INVENTORY_PATH = PLUGIN_MANAGER_DIR / "assets" / "SKILLS-INVENTORY.md"
 
 REGISTRY_VERSION = "2.0.0"
 
@@ -278,15 +278,49 @@ def remove_plugin_from_registry(registry: Dict[str, Any], plugin_name: str) -> b
 # SKILLS-INVENTORY.md Management
 # ──────────────────────────────────────────────
 
+def update_skills_inventory(action: str, skills: List[str]) -> None:
+    """Auto-update SKILLS-INVENTORY.md after install/uninstall operations"""
+    if not SKILLS_INVENTORY_PATH.exists():
+        print(f"[WARNING] SKILLS-INVENTORY.md not found at {SKILLS_INVENTORY_PATH}")
+        return
+
+    try:
+        with open(SKILLS_INVENTORY_PATH, 'r', encoding='utf-8') as f:
+            content = f.read()
+
+        from datetime import datetime
+        today = datetime.now().strftime('%Y-%m-%d')
+
+        # Update last updated date
+        import re
+        content = re.sub(
+            r'\*\*마지막 업데이트\*\*: \d{4}-\d{2}-\d{2}',
+            f'**마지막 업데이트**: {today}',
+            content
+        )
+
+        # Save updated content
+        with open(SKILLS_INVENTORY_PATH, 'w', encoding='utf-8') as f:
+            f.write(content)
+
+        print(f"[OK] Updated SKILLS-INVENTORY.md (action: {action}, skills: {len(skills)})")
+    except Exception as e:
+        print(f"[WARNING] Failed to auto-update SKILLS-INVENTORY.md: {e}")
+
+
 def print_inventory_update_reminder(action: str, skills: List[str]) -> None:
     """Print reminder to update SKILLS-INVENTORY.md manually"""
-    print(f"\n{'='*60}")
+    print(f"
+{'='*60}")
     print("[REMINDER] Update SKILLS-INVENTORY.md")
     print('='*60)
-    print(f"\nAction: {action.upper()}")
+    print(f"
+Action: {action.upper()}")
     print(f"Skills: {', '.join(skills)}")
-    print(f"\nLocation: {SKILLS_INVENTORY_PATH}")
-    print("\nNext step:")
+    print(f"
+Location: {SKILLS_INVENTORY_PATH}")
+    print("
+Next step:")
     if action == "install":
         print("  1. Open SKILLS-INVENTORY.md")
         print("  2. Find the appropriate category section (Design, Documents, Development, Content)")
@@ -296,8 +330,10 @@ def print_inventory_update_reminder(action: str, skills: List[str]) -> None:
         print("  1. Open SKILLS-INVENTORY.md")
         print("  2. Remove the skills from their category tables")
         print("  3. Update the Summary section (Total Managed Skills count)")
-    print(f"\nOr run: git add SKILLS-INVENTORY.md && git commit -m 'docs: update skills inventory'")
-    print("="*60 + "\n")
+    print(f"
+Or run: git add SKILLS-INVENTORY.md && git commit -m 'docs: update skills inventory'")
+    print("="*60 + "
+")
 
 
 # ──────────────────────────────────────────────
@@ -335,8 +371,14 @@ def remove_skill_directories(skills: List[str], target_dir: Path) -> int:
 # Commands
 # ──────────────────────────────────────────────
 
-def cmd_install(git_url: str, plugin_name: Optional[str] = None) -> Dict[str, Any]:
-    """clone -> detect prefix -> discover skills -> copy -> registry"""
+def cmd_install(git_url: str, plugin_name: Optional[str] = None, selected_skills: Optional[List[str]] = None) -> Dict[str, Any]:
+    """clone -> detect prefix -> discover skills -> copy -> registry
+
+    Args:
+        git_url: Git repository URL
+        plugin_name: Custom plugin name (default: repo name)
+        selected_skills: List of specific skills to install (None = all skills)
+    """
     if not check_git_available():
         print("[ERROR] git is not installed or not in PATH")
         return {"status": "error", "message": "git is not installed"}
@@ -372,16 +414,32 @@ def cmd_install(git_url: str, plugin_name: Optional[str] = None) -> Dict[str, An
         return {"status": "error", "message": "No skill directory found"}
 
     # Discover skills
-    skills = discover_skills_in_repo(repo_dir, prefix)
-    if not skills:
+    all_skills = discover_skills_in_repo(repo_dir, prefix)
+    if not all_skills:
         print(f"[ERROR] No skills (with SKILL.md) found under '{prefix}/'")
         cleanup_partial_clone(repo_dir)
         return {"status": "error", "message": "No skills found"}
 
-    print(f"Found {len(skills)} skills: {', '.join(skills)}")
+    print(f"Found {len(all_skills)} skills: {', '.join(all_skills)}")
+
+    # Filter skills if specific skills requested
+    if selected_skills:
+        # Validate requested skills exist
+        invalid_skills = [s for s in selected_skills if s not in all_skills]
+        if invalid_skills:
+            print(f"[ERROR] Skills not found in repository: {', '.join(invalid_skills)}")
+            print(f"Available skills: {', '.join(all_skills)}")
+            cleanup_partial_clone(repo_dir)
+            return {"status": "error", "message": f"Invalid skills: {', '.join(invalid_skills)}"}
+
+        skills_to_install = selected_skills
+        print(f"Installing {len(skills_to_install)} selected skills: {', '.join(skills_to_install)}")
+    else:
+        skills_to_install = all_skills
+        print(f"Installing all {len(skills_to_install)} skills")
 
     # Copy to .claude/skills/
-    copied = copy_skills_to_target(repo_dir, prefix, skills, SKILLS_DIR)
+    copied = copy_skills_to_target(repo_dir, prefix, skills_to_install, SKILLS_DIR)
     print(f"Copied {copied} skills to {SKILLS_DIR}")
 
     # Get commit hash
@@ -399,20 +457,21 @@ def cmd_install(git_url: str, plugin_name: Optional[str] = None) -> Dict[str, An
         "commit_hash": commit_hash,
         "installed_at": now,
         "updated_at": now,
-        "skills": skills,
+        "skills": skills_to_install,
         "status": "installed",
     }
     add_or_update_plugin(registry, plugin_info)
     save_registry(registry)
 
     print(f"[OK] Plugin '{plugin_name}' installed successfully ({commit_hash[:12]})")
-    for s in skills:
+    for s in skills_to_install:
         print(f"  - {s}")
 
-    # Remind user to update SKILLS-INVENTORY.md
-    print_inventory_update_reminder("install", skills)
+    # Auto-update and remind user
+    update_skills_inventory("install", skills_to_install)
+    print_inventory_update_reminder("install", skills_to_install)
 
-    return {"status": "success", "plugin": plugin_name, "skills": skills, "commit": commit_hash}
+    return {"status": "success", "plugin": plugin_name, "skills": skills_to_install, "commit": commit_hash}
 
 
 def cmd_uninstall(plugin_name: str) -> Dict[str, Any]:
@@ -445,7 +504,8 @@ def cmd_uninstall(plugin_name: str) -> Dict[str, Any]:
 
     print(f"[OK] Plugin '{plugin_name}' uninstalled")
 
-    # Remind user to update SKILLS-INVENTORY.md
+    # Auto-update and remind user
+    update_skills_inventory("uninstall", skills)
     print_inventory_update_reminder("uninstall", skills)
 
     return {"status": "success", "plugin": plugin_name, "removed_skills": removed}
@@ -591,6 +651,7 @@ Examples:
     install_p = subparsers.add_parser('install', help='Install plugin from Git repo')
     install_p.add_argument('--git-url', required=True, help='Git repository URL')
     install_p.add_argument('--plugin-name', help='Custom plugin name (default: repo name)')
+    install_p.add_argument('--skills', help='Comma-separated list of specific skills to install (e.g., "docx,pdf,xlsx"). If omitted, all skills are installed.')
 
     # uninstall
     uninstall_p = subparsers.add_parser('uninstall', help='Uninstall plugin')
@@ -610,7 +671,11 @@ Examples:
         sys.exit(1)
 
     if args.action == 'install':
-        result = cmd_install(args.git_url, getattr(args, 'plugin_name', None))
+        selected_skills = None
+        if hasattr(args, 'skills') and args.skills:
+            # Parse comma-separated skills list
+            selected_skills = [s.strip() for s in args.skills.split(',') if s.strip()]
+        result = cmd_install(args.git_url, getattr(args, 'plugin_name', None), selected_skills)
     elif args.action == 'uninstall':
         result = cmd_uninstall(args.plugin_name)
     elif args.action == 'update':

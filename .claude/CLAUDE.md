@@ -22,8 +22,9 @@
 
 ## 스킬 시스템
 
-이 프로젝트는 24개의 특화 스킬을 제공합니다 (문서, 개발, 디자인).
-**전체 스킬 카탈로그**: [SKILLS-INVENTORY.md](./SKILLS-INVENTORY.md)
+이 프로젝트는 40개 이상의 특화 스킬을 제공합니다 (문서, 개발, 디자인, Google Workspace 연동).
+**전체 스킬 카탈로그**: [SKILLS-INVENTORY.md](./skills/skill-hub/assets/SKILLS-INVENTORY.md)
+**스킬 관리**: `skill-hub` 스킬 사용
 
 ---
 

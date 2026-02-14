@@ -47,6 +47,35 @@
         "obsidian-markdown"
       ],
       "status": "installed"
+    },
+    {
+      "name": "ai-skills",
+      "git_url": "https://github.com/sanjay3290/ai-skills",
+      "owner": "sanjay3290",
+      "repo": "ai-skills",
+      "repo_path": "sanjay3290-ai-skills",
+      "skill_prefix": "skills",
+      "commit_hash": "51aaa9c836c709c8e7e9db35778ecf350b8891de",
+      "installed_at": "2026-02-14T09:04:10.147840",
+      "updated_at": "2026-02-14T09:04:10.147840",
+      "skills": [
+        "deep-research",
+        "elevenlabs",
+        "gmail",
+        "google-calendar",
+        "google-chat",
+        "google-docs",
+        "google-drive",
+        "google-sheets",
+        "google-slides",
+        "imagen",
+        "jules",
+        "manus",
+        "notebooklm",
+        "outline",
+        "postgres"
+      ],
+      "status": "installed"
     }
   ]
 }

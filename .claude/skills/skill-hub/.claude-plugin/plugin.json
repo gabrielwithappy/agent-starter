@@ -1,5 +1,5 @@
 {
-    "name": "plugin-manager",
+    "name": "skill-hub",
     "description": "Manage skills and plugins from Git repositories",
     "version": "2.0.0",
     "author": {
@@ -23,25 +23,25 @@
         {
             "name": "install",
             "description": "Install a skill plugin from a Git repository",
-            "executable": "manage.py",
+            "executable": "hub.py",
             "args": ["install", "--git-url", "$ARGUMENTS"]
         },
         {
             "name": "list",
             "description": "List all installed plugins and skills",
-            "executable": "manage.py",
+            "executable": "hub.py",
             "args": ["list"]
         },
         {
             "name": "update",
             "description": "Update installed plugin(s) to latest version",
-            "executable": "manage.py",
+            "executable": "hub.py",
             "args": ["update", "--plugin-name", "$ARGUMENTS"]
         },
         {
             "name": "uninstall",
             "description": "Uninstall a plugin and its skills",
-            "executable": "manage.py",
+            "executable": "hub.py",
             "args": ["uninstall", "--plugin-name", "$ARGUMENTS"]
         },
         {
