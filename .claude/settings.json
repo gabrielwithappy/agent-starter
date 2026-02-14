@@ -8,10 +8,10 @@
       "Bash(git status:*)",
       "Bash(git diff:*)",
       "Bash(git log:*)",
-      "Edit(.claude/skills/**)",
+      "Edit(**/.claude/skills/**)",
       "Edit(obsidianKMS/**)",
       "Read(obsidianKMS/**)",
-      "Read(.claude/**)"
+      "Read(**/.claude/**)"
     ]
   },
   "enabledPlugins": {}
