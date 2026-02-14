@@ -152,9 +152,25 @@ description: 간단한 설명
 
 ## 📊 요약
 
-- **관리형 스킬** (GitHub): 19개
-- **로컬 스킬**: 5개
-- **총 스킬**: 24개 이상
+- **Anthropic 공식 스킬** (GitHub): 16개
+- **Google Workspace & AI 스킬** (GitHub): 15개
+- **Obsidian 스킬** (GitHub): 3개
+- **로컬 커스텀 스킬**: 6개
+- **총 스킬**: 40개
 
-**마지막 업데이트**: 2026-02-11
+### 설치된 스킬 목록
+
+**Anthropic Skills** (16개)
+- algorithmic-art, brand-guidelines, canvas-design, doc-coauthoring, docx, frontend-design, internal-comms, mcp-builder, pdf, pptx, skill-creator, slack-gif-creator, theme-factory, web-artifacts-builder, webapp-testing, xlsx
+
+**Obsidian Skills** (3개)
+- json-canvas, obsidian-bases, obsidian-markdown
+
+**Google Workspace & AI Skills** (15개)
+- deep-research, elevenlabs, gmail, google-calendar, google-chat, google-docs, google-drive, google-sheets, google-slides, imagen, jules, manus, notebooklm, outline, postgres
+
+**로컬 커스텀 스킬** (6개)
+- context-manager, obsidian-frontmatter, obsidian-note-crud, plantuml-ascii, prd, skill-hub
+
+**마지막 업데이트**: 2026-02-14
 **유지보수**: skill-hub install/uninstall 자동 업데이트 + 로컬 스킬 수동 업데이트
