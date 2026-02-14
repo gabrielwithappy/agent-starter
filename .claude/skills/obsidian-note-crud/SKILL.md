@@ -28,6 +28,37 @@ Each tool is a standalone Python script located in the `scripts/` directory. You
 
 When creating or editing notes, you **MUST** first load the `obsidian-markdown` skill for Obsidian Flavored Markdown syntax reference (wikilinks, callouts, embeds, frontmatter, math, Mermaid diagrams, etc.).
 
+#### Critical Formatting Rules
+
+**1. Frontmatter YAML - NO BLANK LINES**
+```yaml
+---
+created: 2026-02-14
+tags:
+  - 30_RESOURCE/개발/AI
+  - 가이드
+aliases:
+  - OAuth Guide
+---
+```
+❌ **WRONG** (blank lines between list items):
+```yaml
+tags:
+
+  - tag1
+
+  - tag2
+```
+
+**2. Code Blocks & Mermaid - Compact Syntax**
+- Do NOT add unnecessary blank lines between statements
+- Follow standard formatting for the language
+- Mermaid diagrams: Keep participant declarations and arrows compact
+
+**3. Content Paragraphs**
+- Use single blank line between paragraphs
+- No blank lines within lists unless semantically required
+
 ### 1. Create a Note
 
 
