@@ -33,7 +33,10 @@
       "Skill(plugin-manager:*)",
       "Bash(xcopy:*)",
       "Bash(git checkout:*)",
-      "Bash(git merge:*)"
+      "Bash(git merge:*)",
+      "Bash(nslookup:*)",
+      "Bash(openssl s_client:*)",
+      "Bash(openssl x509:*)"
     ]
   }
 }
