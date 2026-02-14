@@ -62,7 +62,7 @@ registry_mgr = RegistryManager(REGISTRY_PATH)
 # ──────────────────────────────────────────────
 
 def update_skills_inventory(action: str, skills: List[str]) -> None:
-    """Auto-update SKILLS-INVENTORY.md after install/uninstall operations"""
+    """Auto-update SKILLS-INVENTORY.md after install/uninstall/list operations"""
     if not SKILLS_INVENTORY_PATH.exists():
         print(f"[WARNING] SKILLS-INVENTORY.md not found at {SKILLS_INVENTORY_PATH}")
         return
@@ -86,7 +86,11 @@ def update_skills_inventory(action: str, skills: List[str]) -> None:
         with open(SKILLS_INVENTORY_PATH, 'w', encoding='utf-8') as f:
             f.write(content)
 
-        print(f"[OK] Updated SKILLS-INVENTORY.md (action: {action}, skills: {len(skills)})")
+        # Only print message for install/uninstall; list is silent
+        if action in ["install", "uninstall"]:
+            print(f"[OK] Updated SKILLS-INVENTORY.md (action: {action}, skills: {len(skills)})")
+        elif action == "list":
+            pass  # Silent update for list command
     except Exception as e:
         print(f"[WARNING] Failed to auto-update SKILLS-INVENTORY.md: {e}")
 
@@ -370,6 +374,9 @@ def cmd_list() -> Dict[str, Any]:
             print(f"   Skills ({len(skills)}): {', '.join(skills)}")
 
     print("\n" + "=" * 60)
+
+    # Auto-update SKILLS-INVENTORY.md
+    update_skills_inventory("list", [])
 
     return {"status": "success", "plugins": plugins}
 
