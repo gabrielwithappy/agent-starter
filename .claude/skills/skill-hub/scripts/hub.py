@@ -16,16 +16,26 @@ GitHub 저장소를 repos/에 clone하고 필요한 skill을 .claude/skills/로 
 import json
 import sys
 import io
-import subprocess
-import shutil
 import argparse
 from pathlib import Path
 from datetime import datetime
-from typing import Dict, Any, Optional, List, Tuple
+from typing import Dict, Any, Optional, List
 
 # Fix Windows cp949 encoding issue
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
 sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace')
+
+# Import modules
+from git_ops import (
+    check_git_available, git_clone, git_pull,
+    git_get_commit_hash, git_get_remote_url
+)
+from file_ops import copy_skills_to_target, remove_skill_directories, cleanup_partial_clone
+from path_utils import (
+    parse_git_url, make_repo_dirname, get_repo_dir,
+    detect_skill_prefix, discover_skills_in_repo
+)
+from registry_manager import RegistryManager
 
 # ──────────────────────────────────────────────
 # Constants
@@ -43,235 +53,8 @@ SKILLS_DIR = PLUGIN_MANAGER_DIR.parent
 CLAUDE_DIR = PLUGIN_MANAGER_DIR.parent
 SKILLS_INVENTORY_PATH = PLUGIN_MANAGER_DIR / "assets" / "SKILLS-INVENTORY.md"
 
-REGISTRY_VERSION = "2.0.0"
-
-
-# ──────────────────────────────────────────────
-# Git Operations
-# ──────────────────────────────────────────────
-
-def check_git_available() -> bool:
-    """git이 설치되어 있는지 확인"""
-    try:
-        result = subprocess.run(
-            ["git", "--version"],
-            capture_output=True, text=True, timeout=10
-        )
-        return result.returncode == 0
-    except (FileNotFoundError, subprocess.TimeoutExpired):
-        return False
-
-
-def git_clone(url: str, target_dir: Path) -> bool:
-    """shallow clone (--depth 1)"""
-    try:
-        result = subprocess.run(
-            ["git", "clone", "--depth", "1", url, str(target_dir)],
-            capture_output=True, text=True, timeout=300,
-            encoding='utf-8', errors='replace'
-        )
-        if result.returncode != 0:
-            print(f"[ERROR] git clone failed: {result.stderr.strip()}")
-            return False
-        return True
-    except subprocess.TimeoutExpired:
-        print("[ERROR] git clone timed out (5 min)")
-        return False
-    except Exception as e:
-        print(f"[ERROR] git clone exception: {e}")
-        return False
-
-
-def git_pull(repo_dir: Path) -> bool:
-    """git pull in repo directory"""
-    try:
-        result = subprocess.run(
-            ["git", "pull"],
-            capture_output=True, text=True, timeout=120,
-            cwd=str(repo_dir),
-            encoding='utf-8', errors='replace'
-        )
-        if result.returncode != 0:
-            print(f"[ERROR] git pull failed: {result.stderr.strip()}")
-            return False
-        return True
-    except subprocess.TimeoutExpired:
-        print("[ERROR] git pull timed out (2 min)")
-        return False
-    except Exception as e:
-        print(f"[ERROR] git pull exception: {e}")
-        return False
-
-
-def git_get_commit_hash(repo_dir: Path) -> Optional[str]:
-    """HEAD commit hash"""
-    try:
-        result = subprocess.run(
-            ["git", "rev-parse", "HEAD"],
-            capture_output=True, text=True, timeout=10,
-            cwd=str(repo_dir),
-            encoding='utf-8', errors='replace'
-        )
-        if result.returncode == 0:
-            return result.stdout.strip()
-    except Exception:
-        pass
-    return None
-
-
-def git_get_remote_url(repo_dir: Path) -> Optional[str]:
-    """origin remote URL"""
-    try:
-        result = subprocess.run(
-            ["git", "config", "--get", "remote.origin.url"],
-            capture_output=True, text=True, timeout=10,
-            cwd=str(repo_dir),
-            encoding='utf-8', errors='replace'
-        )
-        if result.returncode == 0:
-            return result.stdout.strip()
-    except Exception:
-        pass
-    return None
-
-
-def cleanup_partial_clone(target_dir: Path) -> None:
-    """실패한 clone 디렉토리 정리"""
-    if target_dir.exists():
-        shutil.rmtree(target_dir, ignore_errors=True)
-
-
-# ──────────────────────────────────────────────
-# Path Utilities
-# ──────────────────────────────────────────────
-
-def parse_git_url(url: str) -> Tuple[str, str]:
-    """Git URL에서 (owner, repo) 추출"""
-    url = url.rstrip("/").replace(".git", "")
-    parts = url.split("/")
-    if len(parts) < 2:
-        raise ValueError(f"Invalid Git URL: {url}")
-    owner = parts[-2]
-    repo = parts[-1]
-    return owner, repo
-
-
-def make_repo_dirname(owner: str, repo: str) -> str:
-    """owner-repo 형식의 디렉토리 이름"""
-    return f"{owner}-{repo}"
-
-
-def get_repo_dir(owner: str, repo: str) -> Path:
-    """repos/ 아래의 clone 디렉토리 절대 경로"""
-    return REPOS_DIR / make_repo_dirname(owner, repo)
-
-
-def detect_skill_prefix(repo_dir: Path) -> Optional[str]:
-    """저장소에서 skill 디렉토리 prefix 탐지.
-    우선순위: .claude/skills/ > .agent/skills/ > skills/
-    """
-    candidates = [".claude/skills", ".agent/skills", "skills"]
-    for candidate in candidates:
-        candidate_path = repo_dir / candidate
-        if candidate_path.is_dir():
-            # 실제 skill 하위 디렉토리가 있는지 확인
-            subdirs = [d for d in candidate_path.iterdir() if d.is_dir() and not d.name.startswith('.')]
-            if subdirs:
-                return candidate
-    return None
-
-
-def discover_skills_in_repo(repo_dir: Path, prefix: str) -> List[str]:
-    """저장소에서 skill 이름 리스트 반환"""
-    skill_base = repo_dir / prefix
-    if not skill_base.is_dir():
-        return []
-    skills = []
-    for item in sorted(skill_base.iterdir()):
-        if item.is_dir() and not item.name.startswith('.'):
-            # SKILL.md가 있는 디렉토리만 skill로 인정
-            if (item / "SKILL.md").exists():
-                skills.append(item.name)
-    return skills
-
-
-# ──────────────────────────────────────────────
-# Registry
-# ──────────────────────────────────────────────
-
-def load_registry() -> Dict[str, Any]:
-    """registry.json 로드"""
-    if REGISTRY_PATH.exists():
-        try:
-            with open(REGISTRY_PATH, 'r', encoding='utf-8') as f:
-                registry = json.load(f)
-            return migrate_registry(registry)
-        except Exception:
-            pass
-
-    return {"version": REGISTRY_VERSION, "plugins": []}
-
-
-def save_registry(registry: Dict[str, Any]) -> None:
-    """registry.json 저장"""
-    REGISTRY_PATH.parent.mkdir(parents=True, exist_ok=True)
-    with open(REGISTRY_PATH, 'w', encoding='utf-8') as f:
-        json.dump(registry, f, indent=2, ensure_ascii=False)
-
-
-def migrate_registry(registry: Dict[str, Any]) -> Dict[str, Any]:
-    """v1.0.0 -> v2.0.0 마이그레이션"""
-    version = registry.get("version", "1.0.0")
-    if version == REGISTRY_VERSION:
-        return registry
-
-    # v1 -> v2 migration
-    new_plugins = []
-    for plugin in registry.get("plugins", []):
-        owner = plugin.get("owner", "unknown")
-        repo = plugin.get("repo", plugin.get("name", "unknown"))
-        new_plugin = {
-            "name": plugin.get("name", repo),
-            "git_url": plugin.get("git_url", ""),
-            "owner": owner,
-            "repo": repo,
-            "repo_path": make_repo_dirname(owner, repo),
-            "skill_prefix": "",  # will be filled on next update
-            "commit_hash": "",   # will be filled on next update
-            "installed_at": plugin.get("installed_at", ""),
-            "updated_at": plugin.get("installed_at", ""),
-            "skills": plugin.get("skills", []),
-            "status": plugin.get("status", "installed"),
-        }
-        # Remove old fields
-        # target_path, last_updated are dropped
-        new_plugins.append(new_plugin)
-
-    return {"version": REGISTRY_VERSION, "plugins": new_plugins}
-
-
-def find_plugin_in_registry(registry: Dict[str, Any], plugin_name: str) -> Optional[Dict[str, Any]]:
-    """이름으로 plugin 찾기"""
-    for plugin in registry.get("plugins", []):
-        if plugin["name"] == plugin_name:
-            return plugin
-    return None
-
-
-def add_or_update_plugin(registry: Dict[str, Any], plugin_info: Dict[str, Any]) -> None:
-    """plugin 추가 또는 업데이트"""
-    for i, plugin in enumerate(registry["plugins"]):
-        if plugin["name"] == plugin_info["name"]:
-            registry["plugins"][i] = plugin_info
-            return
-    registry["plugins"].append(plugin_info)
-
-
-def remove_plugin_from_registry(registry: Dict[str, Any], plugin_name: str) -> bool:
-    """registry에서 plugin 제거"""
-    original = len(registry["plugins"])
-    registry["plugins"] = [p for p in registry["plugins"] if p["name"] != plugin_name]
-    return len(registry["plugins"]) < original
+# Registry manager instance
+registry_mgr = RegistryManager(REGISTRY_PATH)
 
 
 # ──────────────────────────────────────────────
@@ -310,17 +93,13 @@ def update_skills_inventory(action: str, skills: List[str]) -> None:
 
 def print_inventory_update_reminder(action: str, skills: List[str]) -> None:
     """Print reminder to update SKILLS-INVENTORY.md manually"""
-    print(f"
-{'='*60}")
+    print("=" * 60)
     print("[REMINDER] Update SKILLS-INVENTORY.md")
-    print('='*60)
-    print(f"
-Action: {action.upper()}")
+    print("=" * 60)
+    print(f"Action: {action.upper()}")
     print(f"Skills: {', '.join(skills)}")
-    print(f"
-Location: {SKILLS_INVENTORY_PATH}")
-    print("
-Next step:")
+    print(f"Location: {SKILLS_INVENTORY_PATH}")
+    print("Next step:")
     if action == "install":
         print("  1. Open SKILLS-INVENTORY.md")
         print("  2. Find the appropriate category section (Design, Documents, Development, Content)")
@@ -330,41 +109,8 @@ Next step:")
         print("  1. Open SKILLS-INVENTORY.md")
         print("  2. Remove the skills from their category tables")
         print("  3. Update the Summary section (Total Managed Skills count)")
-    print(f"
-Or run: git add SKILLS-INVENTORY.md && git commit -m 'docs: update skills inventory'")
-    print("="*60 + "
-")
-
-
-# ──────────────────────────────────────────────
-# File Copy
-# ──────────────────────────────────────────────
-
-def copy_skills_to_target(repo_dir: Path, prefix: str, skills: List[str], target_dir: Path) -> int:
-    """skill 디렉토리들을 target으로 복사. 반환: 복사된 skill 수"""
-    copied = 0
-    for skill_name in skills:
-        src = repo_dir / prefix / skill_name
-        dst = target_dir / skill_name
-        if not src.is_dir():
-            print(f"  [WARNING] Skill directory not found: {src}")
-            continue
-        if dst.exists():
-            shutil.rmtree(dst)
-        shutil.copytree(src, dst)
-        copied += 1
-    return copied
-
-
-def remove_skill_directories(skills: List[str], target_dir: Path) -> int:
-    """skill 디렉토리들 삭제. 반환: 삭제된 수"""
-    removed = 0
-    for skill_name in skills:
-        skill_path = target_dir / skill_name
-        if skill_path.exists():
-            shutil.rmtree(skill_path)
-            removed += 1
-    return removed
+    print("Or run: git add SKILLS-INVENTORY.md && git commit -m 'docs: update skills inventory'")
+    print("=" * 60)
 
 
 # ──────────────────────────────────────────────
@@ -390,11 +136,11 @@ def cmd_install(git_url: str, plugin_name: Optional[str] = None, selected_skills
         return {"status": "error", "message": str(e)}
 
     plugin_name = plugin_name or repo
-    repo_dir = get_repo_dir(owner, repo)
+    repo_dir = get_repo_dir(REPOS_DIR, owner, repo)
 
     # Check if already cloned
-    registry = load_registry()
-    existing = find_plugin_in_registry(registry, plugin_name)
+    registry = registry_mgr.load()
+    existing = registry_mgr.find_plugin(registry, plugin_name)
     if existing and repo_dir.exists():
         print(f"Plugin '{plugin_name}' is already installed. Use 'update' to refresh.")
         return {"status": "error", "message": f"Plugin '{plugin_name}' already installed"}
@@ -452,7 +198,7 @@ def cmd_install(git_url: str, plugin_name: Optional[str] = None, selected_skills
         "git_url": git_url,
         "owner": owner,
         "repo": repo,
-        "repo_path": make_repo_dirname(owner, repo),
+        "repo_path": f"{owner}-{repo}",
         "skill_prefix": prefix,
         "commit_hash": commit_hash,
         "installed_at": now,
@@ -460,8 +206,8 @@ def cmd_install(git_url: str, plugin_name: Optional[str] = None, selected_skills
         "skills": skills_to_install,
         "status": "installed",
     }
-    add_or_update_plugin(registry, plugin_info)
-    save_registry(registry)
+    registry_mgr.add_or_update_plugin(registry, plugin_info)
+    registry_mgr.save(registry)
 
     print(f"[OK] Plugin '{plugin_name}' installed successfully ({commit_hash[:12]})")
     for s in skills_to_install:
@@ -476,8 +222,8 @@ def cmd_install(git_url: str, plugin_name: Optional[str] = None, selected_skills
 
 def cmd_uninstall(plugin_name: str) -> Dict[str, Any]:
     """remove skills -> remove repo -> registry"""
-    registry = load_registry()
-    plugin = find_plugin_in_registry(registry, plugin_name)
+    registry = registry_mgr.load()
+    plugin = registry_mgr.find_plugin(registry, plugin_name)
 
     if not plugin:
         print(f"[ERROR] Plugin '{plugin_name}' not found in registry")
@@ -495,12 +241,13 @@ def cmd_uninstall(plugin_name: str) -> Dict[str, Any]:
     if repo_path:
         clone_dir = REPOS_DIR / repo_path
         if clone_dir.exists():
+            import shutil
             shutil.rmtree(clone_dir, ignore_errors=True)
             print(f"  Removed repo: {clone_dir.name}")
 
     # Update registry
-    remove_plugin_from_registry(registry, plugin_name)
-    save_registry(registry)
+    registry_mgr.remove_plugin(registry, plugin_name)
+    registry_mgr.save(registry)
 
     print(f"[OK] Plugin '{plugin_name}' uninstalled")
 
@@ -517,11 +264,11 @@ def cmd_update(plugin_name: Optional[str] = None) -> Dict[str, Any]:
         print("[ERROR] git is not installed or not in PATH")
         return {"status": "error", "message": "git is not installed"}
 
-    registry = load_registry()
+    registry = registry_mgr.load()
     plugins_to_update = []
 
     if plugin_name:
-        plugin = find_plugin_in_registry(registry, plugin_name)
+        plugin = registry_mgr.find_plugin(registry, plugin_name)
         if not plugin:
             print(f"[ERROR] Plugin '{plugin_name}' not found in registry")
             return {"status": "error", "message": f"Plugin '{plugin_name}' not found"}
@@ -547,12 +294,12 @@ def cmd_update(plugin_name: Optional[str] = None) -> Dict[str, Any]:
                 continue
             print(f"  Re-cloning '{name}' ...")
             owner, repo = parse_git_url(git_url)
-            clone_dir = get_repo_dir(owner, repo)
+            clone_dir = get_repo_dir(REPOS_DIR, owner, repo)
             REPOS_DIR.mkdir(parents=True, exist_ok=True)
             if not git_clone(git_url, clone_dir):
                 print(f"  [ERROR] Failed to clone '{name}'")
                 continue
-            plugin["repo_path"] = make_repo_dirname(owner, repo)
+            plugin["repo_path"] = f"{owner}-{repo}"
 
         old_hash = plugin.get("commit_hash", "")
 
@@ -591,13 +338,13 @@ def cmd_update(plugin_name: Optional[str] = None) -> Dict[str, Any]:
 
         updated.append(name)
 
-    save_registry(registry)
+    registry_mgr.save(registry)
     return {"status": "success", "updated": updated}
 
 
 def cmd_list() -> Dict[str, Any]:
     """설치된 plugins 목록 출력"""
-    registry = load_registry()
+    registry = registry_mgr.load()
     plugins = registry.get("plugins", [])
 
     print(f"\nInstalled Plugins ({len(plugins)}):")

@@ -91,8 +91,8 @@
 | 스킬 | 목적 | 핵심 기능 |
 |------|------|---------|
 | **context-manager** | AI Context 문서 관리 | Context 생성/검색/업데이트, 대화 간 지식 보존 |
-| **obsidian-note-crud** | 노트 레벨 CRUD 작업 | Python 스크립트: 생성, 읽기, 수정, 삭제, 검색, 태그 관리 |
 | **obsidian-frontmatter** | Frontmatter 메타데이터 검색 & 관리 | 속성으로 노트 찾기, frontmatter 생성/수정/삭제 |
+| **obsidian-note-crud** | 노트 레벨 CRUD 작업 | Python 스크립트: 생성, 읽기, 수정, 삭제, 검색, 태그 관리 |
 | **plantuml-ascii** | ASCII 아트 다이어그램 생성 | PlantUML을 ASCII로 변환, 시퀀스/클래스/플로우 다이어그램 |
 | **prd** | 제품 요구사항 문서 | 포괄적인 PRD 생성, 사용자 스토리 및 사양 포함 |
 | **skill-hub** | 스킬 생명주기 관리 | GitHub 저장소에서 스킬 설치/업데이트/제거 |
@@ -222,5 +222,5 @@ description: 간단한 설명
 **로컬 커스텀 스킬** (6개)
 - context-manager, obsidian-frontmatter, obsidian-note-crud, plantuml-ascii, prd, skill-hub
 
-**마지막 업데이트**: 2026-02-14
+**마지막 업데이트**: 2026-02-14 (스킬 목록 검증 및 정렬)
 **유지보수**: skill-hub install/uninstall 자동 업데이트 + 로컬 스킬 수동 업데이트
