@@ -43,6 +43,36 @@
 | **xlsx** | 스프레드시트 자동화 | Excel 파일 생성/편집/정리 |
 | **skill-hub** | 스킬 설치 & 관리 | GitHub에서 스킬 설치/제거 |
 
+### 🤖 **AI & 자동화**
+
+| 스킬 | 목적 | 핵심 기능 |
+|------|------|---------|
+| **deep-research** | 심층 조사 자동화 | Google Gemini Deep Research 에이전트 (2-10분, $2-5) |
+| **imagen** | AI 이미지 생성 | Google Gemini 이미지 생성 |
+| **elevenlabs** | 음성 변환 | 텍스트→음성, 팟캐스트, 나레이션 |
+| **jules** | 코딩 태스크 위임 | 버그 수정, 테스트, 문서화, PR 리뷰 |
+| **manus** | 복잡한 작업 위임 | 장시간 조사, 분석, 문서 생성, 다단계 워크플로우 |
+
+### 📊 **데이터 & 분석**
+
+| 스킬 | 목적 | 핵심 기능 |
+|------|------|---------|
+| **postgres** | PostgreSQL 쿼리 | 읽기 전용 SQL (SELECT), 데이터 분석 |
+| **notebooklm** | NotebookLM 관리 | 노트북 쿼리, 소스 동기화, 대량 내보내기 |
+| **outline** | Wiki 문서 관리 | 위키 검색, 페이지 읽기/생성, 마크다운 내보내기 |
+
+### 📧 **Google Workspace 연동**
+
+| 스킬 | 목적 | 핵심 기능 |
+|------|------|---------|
+| **gmail** | Gmail 관리 | 이메일 검색, 읽기, 전송, 라벨 관리 |
+| **google-calendar** | Google 캘린더 | 일정 조회, 생성, 업데이트, 시간 검색 |
+| **google-chat** | Google Chat | 메시지 전송, 대화 읽기, 공간 관리 |
+| **google-docs** | Google Docs | 문서 생성, 검색, 텍스트 편집 |
+| **google-drive** | Google Drive | 파일/폴더 검색, 업로드, 다운로드, 이동 |
+| **google-sheets** | Google Sheets | 스프레드시트 읽기/쓰기, 셀 업데이트, 행 추가 |
+| **google-slides** | Google Slides | 프레젠테이션 생성, 슬라이드 추가, 텍스트 편집 |
+
 ### 📝 **콘텐츠 작성**
 
 | 스킬 | 목적 | 핵심 기능 |
@@ -98,6 +128,26 @@ PowerPoint → pptx
 플로우차트, 시퀀스 → plantuml-ascii
 마인드맵, canvas → json-canvas
 생성 미술 → algorithmic-art
+```
+
+### Google Workspace 연동
+```
+Gmail → gmail
+캘린더 → google-calendar
+Chat → google-chat
+문서 → google-docs
+드라이브 → google-drive
+스프레드시트 → google-sheets
+프레젠테이션 → google-slides
+```
+
+### AI 위임 & 자동화
+```
+심층 조사 → deep-research
+코딩 태스크 → jules
+복잡한 작업 → manus
+음성 변환 → elevenlabs
+이미지 생성 → imagen
 ```
 
 ---
