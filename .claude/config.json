@@ -35,6 +35,16 @@
                 "-y",
                 "@wonderwhy-er/desktop-commander"
             ]
+        },
+        "notion": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@notionhq/mcp-server"
+            ],
+            "env": {
+                "NOTION_API_KEY": "${NOTION_API_KEY}"
+            }
         }
     }
 }
