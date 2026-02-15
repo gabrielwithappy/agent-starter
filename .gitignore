@@ -90,3 +90,7 @@ data/
 # Skill workspace (임시 파일 및 산출물)
 .claude/skills/workspace/*/temp/
 .claude/skills/workspace/*/output/
+
+# Local Claude settings (contains credentials)
+.claude/settings.local.json
+.claude/settings_backup.json
